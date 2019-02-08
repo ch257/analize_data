@@ -12,7 +12,7 @@ class Template:
 	
 	def read_settings(self, args):
 		if len(args) < 2:
-			self.errors.raise_error('no ini file path')
+			self.errors.raise_error('No ini file path')
 		else:
 			encoding = self.ini_encoding
 			if len(args) > 2:
