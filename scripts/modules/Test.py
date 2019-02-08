@@ -14,7 +14,7 @@ class Test:
 		self.errors = Errors()
 		self.ini_encoding = 'utf-8'
 		self.ini_parser = IniParser(self.errors)
-		self.settings = {}
+		# self.settings = {}
 	
 	def read_settings(self, args):
 		if len(args) < 2:
@@ -29,9 +29,9 @@ class Test:
 	
 	def main(self, args):
 		self.read_settings(args)
-		input_file_path = self.ini_parser.get_param(self.settings, 'input', 'file_path')
-		list_separator = self.ini_parser.get_param(self.settings, 'input', 'list_separator', 'escape')
-		decimal_symbol = self.ini_parser.get_param(self.settings, 'input', 'decimal_symbol', 'escape')
+		input_file_path = self.ini_parser.get_param('input', 'file_path')
+		list_separator = self.ini_parser.get_param('input', 'list_separator', 'escape')
+		decimal_symbol = self.ini_parser.get_param('input', 'decimal_symbol', 'escape')
 		
 		input_file = Files(self.errors)
 		tools = Tools(self.errors)

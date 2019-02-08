@@ -55,28 +55,28 @@ class IniParser:
 		self.settings['ini_file_path'] = ini_file_path
 		return self.settings
 	
-	def get_param(self, settings, section, param=None, param_type='str', error_ignoring=False, default_param_value=None):
+	def get_param(self, section, param=None, param_type='str', error_ignoring=False, default_param_value=None):
 		if self.errors.error_occured:
 			return None
 		
 		if self.settings.get(section):
-			if not settings.get(section):
-				settings[section] = {} 
+			# if not settings.get(section):
+				# settings[section] = {} 
 			if param:
 				if self.settings[section].get(param):
-					settings[section][param] = self.tools.str2type(self.settings[section][param], param_type)
+					# settings[section][param] = self.tools.str2type(self.settings[section][param], param_type)
 					return self.tools.str2type(self.settings[section][param], param_type)
 				else:
 					if not error_ignoring:
 						self.errors.raise_error('No parameter [' + section + '][' + param + '] in ini file ' + self.settings['ini_file_path'])
-						settings[section][param] = ''
+						# settings[section][param] = ''
 						return ''
 					else:
-						settings[section][param] = self.tools.str2type(default_param_value, param_type)
+						# settings[section][param] = self.tools.str2type(default_param_value, param_type)
 						return self.tools.str2type(default_param_value, param_type)
 					
 			else:
-				settings[section] = self.settings[section]
+				# settings[section] = self.settings[section]
 				return self.settings[section]
 		else:
 			if not error_ignoring:

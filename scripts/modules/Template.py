@@ -23,15 +23,18 @@ class Template:
 	
 	def set_params(self, args):
 		self.read_settings(args)
-		self.ini_parser.get_param(self.settings, 'g2', 'p1', 'str_array')
-		self.ini_parser.get_param(self.settings, 'g3')
-		g1_p2 = self.ini_parser.get_param(self.settings, 'g1', 'p2')
+		self.settings['g2'] = {}
+		self.settings['g3'] = {}
+		self.settings['g2']['p1'] = self.ini_parser.get_param('g2', 'p1', 'str_array')
+		self.settings['g3'] = self.ini_parser.get_param('g3')
 		
-		print(g1_p2)
 		
 	def main(self, args):
 		self.set_params(args)
 		print(self.settings)
+		g1_p2 = self.ini_parser.get_param('g1', 'p2')
+		print(g1_p2)
+		
 		
 		if self.errors.error_occured:
 			self.errors.print_errors()
