@@ -6,12 +6,14 @@ class Files:
 		self.errors = errors
 		self.handler = None
 	
-	def open_file(self, path, mode, encoding):
-		if not self.errors.error_occured:
-			try:
-				self.handler = open(path, mode, encoding = encoding)
-			except Exception as e:
-				self.errors.raise_error('Can\'t open file ' + path)
+	def open_file(self, path, mode='r', encoding='utf-8'):
+		if self.errors.error_occured:
+			return None
+		
+		try:
+			self.handler = open(path, mode, encoding = encoding)
+		except Exception as e:
+			self.errors.raise_error('Can\'t open file ' + path)
 	
 	def close_file(self):
 		if self.handler:
@@ -19,8 +21,15 @@ class Files:
 			self.handler = None
 	
 	def read_line(self):
-		return self.handler.readline()
+		if self.errors.error_occured:
+			return None
+		
+		line = self.handler.readline()
+		return line
 	
 	def write_line(self, line):
+		if self.errors.error_occured:
+			return None
+		
 		self.handler.write(line + "\n")
 		

@@ -22,9 +22,11 @@ class FileSystem:
 					except Exception as e:
 						self.errors.raise_error('Can\'t create folder' + folder_path)
 						break
-		return None
 		
 	def get_folder_list(self, folder):
+		if self.errors.error_occured:
+			return None
+		
 		lst = []
 		try:
 			lst = os.listdir(folder)

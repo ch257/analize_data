@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*
 
 from modules.common.Files import *
+from modules.common.Tools import *
 
 class IniParser:
 	def __init__(self, errors):
 		self.errors = errors
 		self.settings = {}
+		self.tools = Tools(self.errors)
 	
 	def exlude_non_data(self, line):
 		line = line.rstrip('\n')
@@ -31,7 +33,7 @@ class IniParser:
 		
 	def read_ini(self, ini_file_path, encoding):
 		if self.errors.error_occured:
-			return self.settings
+			return None
 		
 		ini_file = Files(self.errors)
 		ini_file.open_file(ini_file_path, 'r', encoding)
@@ -53,39 +55,29 @@ class IniParser:
 		self.settings['ini_file_path'] = ini_file_path
 		return self.settings
 	
-	def type_value(self, value, c_type):
-		if c_type == 'int':
-			return int(value)
-		elif c_type == 'num' or c_type == 'float':
-			return float(value)
-		elif c_type == 'bool':
-			if value == '1':
-				return True
-			else:
-				return False
-		else:
-			return value
-	
-	def get_param(self, section, param = None, c_type = 'str', error_ignoring = False, default_param_value = None):
+	def get_param(self, settings, section, param=None, param_type='str', error_ignoring=False, default_param_value=None):
 		if self.errors.error_occured:
-			if param:
-				return ''
-			else:
-				return {}
+			return None
 		
 		if self.settings.get(section):
+			if not settings.get(section):
+				settings[section] = {} 
 			if param:
 				if self.settings[section].get(param):
-					return self.type_value(self.settings[section][param], c_type)
+					# return self.tools.str2type(self.settings[section][param], param_type)
+					settings[section][param] = self.tools.str2type(self.settings[section][param], param_type)
 				else:
 					if not error_ignoring:
 						self.errors.raise_error('No parameter [' + section + '][' + param + '] in ini file ' + self.settings['ini_file_path'])
-						return ''
+						# return ''
+						# settings[section][param] = ''
 					else:
-						return self.type_value(default_param_value, c_type)
+						# return self.tools.str2type(default_param_value, param_type)
+						settings[section][param] = self.tools.str2type(default_param_value, param_type)
 					
 			else:
-				return self.settings[section]
+				# return self.settings[section]
+				settings[section] = self.settings[section]
 		else:
 			if not error_ignoring:
 				self.errors.raise_error('No section [' + section + '] in ini file ' + self.settings['ini_file_path'])

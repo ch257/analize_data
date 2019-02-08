@@ -25,11 +25,8 @@ class Template:
 	def set_params(self, args):
 		tools = Tools(self.errors)
 		self.read_settings(args)
-		self.settings['g1'] = self.ini_parser.get_param('g1', None)
-		self.settings['g2'] = {}
-		self.settings['g2']['p1'] = tools.explode(',', self.ini_parser.get_param('g2', 'p1'))
-		self.settings['g3'] = {}
-		self.settings['g3']['i4'] = self.ini_parser.get_param('g3', 'i4', 'int')
+		self.ini_parser.get_param(self.settings, 'g2', 'p1', 'str_array')
+		self.ini_parser.get_param(self.settings, 'g3')
 		
 	def main(self, args):
 		self.set_params(args)

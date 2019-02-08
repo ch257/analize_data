@@ -1,85 +1,96 @@
 # -*- coding: utf-8 -*
 
-
 class Tools:
 	def __init__(self, errors):
 		self.errors = errors
 	
-	def explode(self, div, str):
-		if div and str:
-			return str.split(div)
-		elif str:
-			return [str]
-		else:
-			return []
+	def explode(self, line, sep=','):
+		if self.errors.error_occured:
+			return None
+		
+		str_array = line.split(sep)
+		
+		return str_array
 	
-	def implode(self, div, arr):
-		str = div.join(arr)
-		return str
-	
-	def line_to_record(self, div, line, keys):
-		rec = {}
-		arr = self.explode(div, line)
-		if len(arr) < len(keys):
-			for i in range(len(arr)):
-				rec[keys[i]] = arr[i]
-			self.errors.raise_error('not enough columns in line')
-		else:
-			for i in range(len(keys)):
-				rec[keys[i]] = arr[i]
-		return rec
-	
-	def record_to_line(self, div, rec, keys):
-		line = None
-		for key in keys:
-			if rec[key]:
-				item = rec[key]
-			else:
-				item = ''
-			if line:
-				line = line + div + item
-			else:
-				line = item
+	def implode(self, str_array, sep=','):
+		if self.errors.error_occured:
+			return None
+		
+		line = sep.join(str_array)
+		
 		return line
+		
+	def line2rec(self, line, cols, sep=','):
+		if self.errors.error_occured:
+			return None
+		
+		rec = {}
+		str_array = self.explode(line, sep)
+		length = min(len(str_array), len(cols))
+		for cnt in range(length):
+			rec[cols[cnt]] = str_array[cnt]
 
-	def escape_sequence(self, str):
-		if str:
-			str = str.replace("'\\t'", '\t')
-			str = str.replace("','", ',')
-			str = str.replace("';'", ';')
-			str = str.replace("''", '')
-		return str
-	
-	def print_arr(self, arr):
-		for arr_item in arr: 
-			print(arr_item)
-			
-	def int_arr(self, arr):
-		cnt = 0
-		for item in arr:
-			arr[cnt] = int(item)
-			cnt = cnt + 1
-		return arr
-			
-	def float_arr(self, arr):
-		cnt = 0
-		for item in arr:
-			arr[cnt] = float(item)
-			cnt = cnt + 1
-		return arr
+		return rec
 		
-	def bool_arr(self, arr):
-		cnt = 0
-		for item in arr:
-			if arr[cnt] == '1':
-				arr[cnt] = True
+	def rec2line(self, rec, cols, sep=','):
+		if self.errors.error_occured:
+			return None
+		
+		str_array = []
+		for col in cols:
+			if rec.get(col):
+				str_array.append(rec[col])
+		
+		line = self.implode(str_array, sep)
+		
+		return line
+		
+	def str2type(self, value, value_type):
+		if self.errors.error_occured:
+			return None
+		
+		if value_type == 'str':
+			return value
+		
+		elif value_type == 'int':
+			return int(value)
+		
+		elif value_type == 'num' or value_type == 'float':
+			return float(value)
+		
+		elif value_type == 'bool':
+			if value == '1':
+				return True
 			else:
-				arr[cnt] = False
-			cnt = cnt + 1
-		return arr
+				return False
 		
-	def format_number(self, zeros, number):
-		len_zeros = len(zeros)
-		str_number = str(number)
-		len_number = len(str_number)
-		return zeros[0:(len_zeros - len_number)] + str_number
+		elif value_type == 'str_array':
+			return self.explode(value)
+		
+		elif value_type == 'int_array':
+			int_array = []
+			str_array = self.explode(value)
+			for s in str_array:
+				int_array.append(int(s))
+			return int_array
+		
+		elif value_type == 'num_array' or value_type == 'float_array':
+			float_array = []
+			str_array = self.explode(value)
+			for s in str_array:
+				float_array.append(float(s))
+			return float_array
+		
+		elif value_type == 'bool_array':
+			bool_array = []
+			str_array = self.explode(value)
+			for s in str_array:
+				if value == '1':
+					bool_array.append(True)
+				else:
+					bool_array.append(False)
+			return bool_array
+		
+		else:
+			self.errors.raise_error('Unknown type ' + value_type)
+			return value
