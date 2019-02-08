@@ -104,6 +104,8 @@ class Tools:
 			seq = seq.replace("'\\t'", '\t')
 		elif seq == "','":
 			seq = seq.replace("','", ',')
+		elif seq == "'.'":
+			seq = seq.replace("','", ',')
 		elif seq == "';'": 
 			seq = seq.replace("';'", ';')
 		elif seq == "''":

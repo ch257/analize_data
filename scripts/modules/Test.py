@@ -4,6 +4,7 @@ from modules.common.Errors import *
 from modules.common.IniParser import *
 from modules.common.Files import *
 from modules.common.Tools import *
+from modules.common.CSVParser import *
 
 #######################
 
@@ -29,7 +30,8 @@ class Test:
 	def main(self, args):
 		self.read_settings(args)
 		input_file_path = self.ini_parser.get_param(self.settings, 'input', 'file_path')
-		sep = self.ini_parser.get_param(self.settings, 'input', 'separator', 'escape')
+		list_separator = self.ini_parser.get_param(self.settings, 'input', 'list_separator', 'escape')
+		decimal_symbol = self.ini_parser.get_param(self.settings, 'input', 'decimal_symbol', 'escape')
 		
 		input_file = Files(self.errors)
 		tools = Tools(self.errors)
@@ -39,7 +41,7 @@ class Test:
 			line = input_file.read_line()
 			if line:
 				line = line.strip('\n')
-				columns = tools.explode(line, sep)
+				columns = tools.explode(line, list_separator)
 			else:
 				self.errors.raise_error('File ' + input_file_path + ' is empty')
 			break
@@ -49,7 +51,7 @@ class Test:
 			if line:
 				line = line.strip('\n')
 				if line:
-					rec = tools.line2rec(line, columns, sep)
+					rec = tools.line2rec(line, columns, list_separator)
 				
 				print(rec)
 			else:
