@@ -64,20 +64,20 @@ class IniParser:
 				settings[section] = {} 
 			if param:
 				if self.settings[section].get(param):
-					# return self.tools.str2type(self.settings[section][param], param_type)
 					settings[section][param] = self.tools.str2type(self.settings[section][param], param_type)
+					return self.tools.str2type(self.settings[section][param], param_type)
 				else:
 					if not error_ignoring:
 						self.errors.raise_error('No parameter [' + section + '][' + param + '] in ini file ' + self.settings['ini_file_path'])
-						# return ''
-						# settings[section][param] = ''
+						settings[section][param] = ''
+						return ''
 					else:
-						# return self.tools.str2type(default_param_value, param_type)
 						settings[section][param] = self.tools.str2type(default_param_value, param_type)
+						return self.tools.str2type(default_param_value, param_type)
 					
 			else:
-				# return self.settings[section]
 				settings[section] = self.settings[section]
+				return self.settings[section]
 		else:
 			if not error_ignoring:
 				self.errors.raise_error('No section [' + section + '] in ini file ' + self.settings['ini_file_path'])

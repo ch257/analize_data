@@ -27,6 +27,9 @@ class Template:
 		self.read_settings(args)
 		self.ini_parser.get_param(self.settings, 'g2', 'p1', 'str_array')
 		self.ini_parser.get_param(self.settings, 'g3')
+		g1_p2 = self.ini_parser.get_param(self.settings, 'g1', 'p2')
+		
+		print(g1_p2)
 		
 	def main(self, args):
 		self.set_params(args)
