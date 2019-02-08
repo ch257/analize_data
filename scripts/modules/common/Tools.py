@@ -91,6 +91,25 @@ class Tools:
 					bool_array.append(False)
 			return bool_array
 		
+		elif value_type == 'escape':
+			return  self.escape_sequence(value)
+			
 		else:
 			self.errors.raise_error('Unknown type ' + value_type)
 			return value
+			
+			
+	def escape_sequence(self, seq):
+		if seq == "'\\t'":
+			seq = seq.replace("'\\t'", '\t')
+		elif seq == "','":
+			seq = seq.replace("','", ',')
+		elif seq == "';'": 
+			seq = seq.replace("';'", ';')
+		elif seq == "''":
+			seq = seq.replace("''", '')
+		else:
+			self.errors.raise_error('Unknown escape sequence ' + seq)
+		return seq
+		
+		

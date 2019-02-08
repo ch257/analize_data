@@ -2,7 +2,6 @@
 
 from modules.common.Errors import *
 from modules.common.IniParser import *
-from modules.common.Tools import *
 
 class Template:
 	def __init__(self):
@@ -23,7 +22,6 @@ class Template:
 			self.ini_parser.read_ini(args[1], encoding)
 	
 	def set_params(self, args):
-		tools = Tools(self.errors)
 		self.read_settings(args)
 		self.ini_parser.get_param(self.settings, 'g2', 'p1', 'str_array')
 		self.ini_parser.get_param(self.settings, 'g3')
