@@ -29,35 +29,38 @@ class Test:
 	
 	def main(self, args):
 		self.read_settings(args)
+		
 		input_file_path = self.ini_parser.get_param('input', 'file_path')
-		list_separator = self.ini_parser.get_param('input', 'list_separator', 'escape')
-		decimal_symbol = self.ini_parser.get_param('input', 'decimal_symbol', 'escape')
+		input_file_format = {}
+		input_file_format_section = self.ini_parser.get_param('input', 'file_format')
+		input_file_format['list_separator'] = self.ini_parser.get_param(input_file_format_section, 'list_separator', 'escape')
+		input_file_format['decimal_symbol'] = self.ini_parser.get_param(input_file_format_section, 'decimal_symbol', 'escape')
+		input_file_format['encoding'] = self.ini_parser.get_param(input_file_format_section, 'encoding')
 		
-		input_file = Files(self.errors)
-		tools = Tools(self.errors)
+		input_file_column_types_section = self.ini_parser.get_param(input_file_format_section, 'file_column_types')
+		input_file_column_formats_section = self.ini_parser.get_param(input_file_format_section, 'file_column_formats')
+		input_file_format['file_column_types'] = self.ini_parser.get_param(input_file_column_types_section)
+		input_file_format['file_column_formats'] = self.ini_parser.get_param(input_file_column_formats_section)
 		
-		input_file.open_file(input_file_path)
-		while not self.errors.error_occured:
-			line = input_file.read_line()
-			if line:
-				line = line.strip('\n')
-				columns = tools.explode(line, list_separator)
-			else:
-				self.errors.raise_error('File ' + input_file_path + ' is empty')
-			break
+		output_file_path = self.ini_parser.get_param('output', 'file_path')
+		output_file_format = {}
+		output_file_format_section = self.ini_parser.get_param('output', 'file_format')
+		output_file_format['list_separator'] = self.ini_parser.get_param(output_file_format_section, 'list_separator', 'escape')
+		output_file_format['decimal_symbol'] = self.ini_parser.get_param(output_file_format_section, 'decimal_symbol', 'escape')
+		output_file_format['encoding'] = self.ini_parser.get_param(output_file_format_section, 'encoding')
 		
-		while not self.errors.error_occured:
-			line = input_file.read_line()
-			if line:
-				line = line.strip('\n')
-				if line:
-					rec = tools.line2rec(line, columns, list_separator)
-				
-				print(rec)
-			else:
-				break
-			
-		input_file.close_file()
+		output_file_column_types_section = self.ini_parser.get_param(output_file_format_section, 'file_column_types')
+		output_file_column_formats_section = self.ini_parser.get_param(output_file_format_section, 'file_column_formats')
+		output_file_format['file_column_types'] = self.ini_parser.get_param(output_file_column_types_section)
+		output_file_format['file_column_formats'] = self.ini_parser.get_param(output_file_column_formats_section)
+		
+		csv_parser = CSVParser(self.errors)
+		table = csv_parser.csv2table(input_file_path, input_file_format)
+		
+		csv_parser.table2csv(table, output_file_path, output_file_format)
+		print(table['<DATE>'])
+		print(table['<TIME>'])
+		
 		
 		if self.errors.error_occured:
 			self.errors.print_errors()

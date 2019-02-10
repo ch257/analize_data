@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*
 
+import time
+import datetime
+from datetime import datetime as dt, date, time as tm
+
 class Tools:
 	def __init__(self, errors):
 		self.errors = errors
@@ -38,7 +42,7 @@ class Tools:
 		
 		str_array = []
 		for col in cols:
-			if rec.get(col):
+			if rec.get(col) != None:
 				str_array.append(rec[col])
 		
 		line = self.implode(str_array, sep)
@@ -63,7 +67,13 @@ class Tools:
 				return True
 			else:
 				return False
-		
+				
+		elif value_type == 'yyyymmdd':
+			return dt.strptime(value, '%Y%m%d') #.date()
+			
+		elif value_type == 'hhmmss':
+			return dt.strptime(value, '%H%M%S') #.time()
+			
 		elif value_type == 'str_array':
 			return self.explode(value)
 		
@@ -97,9 +107,56 @@ class Tools:
 		else:
 			self.errors.raise_error('Unknown type ' + value_type)
 			return value
+	
+	def shape_column_types(self, columns, file_column_types):
+		if self.errors.error_occured:
+			return None
 			
+		column_types = {}
+		for col in columns:
+			if file_column_types.get(col) != None:
+				column_types[col] = file_column_types[col]
+			else:
+				self.errors.raise_error('Unknown column ' + col + ' for type detecting')
+				break
+		
+		return column_types
+		
+	def shape_column_formats(self, columns, all_column_formats):
+		if self.errors.error_occured:
+			return None
 			
+		column_formats = {}
+		for col in columns:
+			if all_column_formats.get(col) != None:
+				column_formats[col] = all_column_formats[col]
+			else:
+				self.errors.raise_error('Unknown column ' + col + ' for format detecting')
+				break
+		
+		return column_formats
+	
+	def type_rec(self, rec, column_types):
+		if self.errors.error_occured:
+			return None
+		
+		for col in rec:
+			rec[col] = self.str2type(rec[col], column_types[col])
+	
+	def add_rec_to_table(self, rec, table):
+		if self.errors.error_occured:
+			return None
+		
+		for col in table:
+			if rec.get(col) != None:
+				table[col].append(rec[col])
+			else:
+				table[col].append(None)
+	
 	def escape_sequence(self, seq):
+		if self.errors.error_occured:
+			return None
+			
 		if seq == "'\\t'":
 			seq = seq.replace("'\\t'", '\t')
 		elif seq == "','":
