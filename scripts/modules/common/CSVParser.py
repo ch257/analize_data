@@ -32,7 +32,6 @@ class CSVParser:
 			break
 			
 		column_types = tools.shape_column_types(columns, file_column_types)
-		# column_formats = tools.shape_column_formats(columns, all_column_formats)
 		
 		for col in columns:
 			table[col] = []
@@ -50,19 +49,31 @@ class CSVParser:
 			
 		file.close_file()
 		
-		return table
+		return table, columns
 		
-	def table2csv(self, table, file_path, file_format):
+	def table2csv(self, table, columns, file_path, file_format):
 		if self.errors.error_occured:
 			return None
 			
 		list_separator = file_format['list_separator']
 		decimal_symbol = file_format['decimal_symbol']
 		encoding = file_format['encoding']
-		file_column_types = file_format['file_column_types']
+		file_column_formats = file_format['file_column_formats']
 		
 		tools = Tools(self.errors)
 		file = Files(self.errors)
 		
+		column_formats = tools.shape_column_formats(columns, file_column_formats)
 		
+		file.open_file(file_path, 'w', encoding)
+		line = tools.implode(columns, list_separator)
+		file.write_line(line)
 		
+		length = len(table[columns[0]])
+		for rec_cnt in range(length):
+			rec = tools.get_rec_from_table(rec_cnt, table)
+			tools.str_rec(rec, column_formats)
+			line = tools.rec2line(rec, columns, list_separator)
+			file.write_line(line)
+		
+		file.close_file()

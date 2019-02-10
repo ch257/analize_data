@@ -55,11 +55,15 @@ class Test:
 		output_file_format['file_column_formats'] = self.ini_parser.get_param(output_file_column_formats_section)
 		
 		csv_parser = CSVParser(self.errors)
-		table = csv_parser.csv2table(input_file_path, input_file_format)
+		table, columns = csv_parser.csv2table(input_file_path, input_file_format)
 		
-		csv_parser.table2csv(table, output_file_path, output_file_format)
-		print(table['<DATE>'])
-		print(table['<TIME>'])
+		csv_parser.table2csv(table, columns, output_file_path, output_file_format)
+		# print(table['<DATE>'])
+		# print(table['<TIME>'])
+		
+		# print('{:.2f}'.format(1534.545))
+		# print('{}'.format('dfg'))
+		
 		
 		
 		if self.errors.error_occured:

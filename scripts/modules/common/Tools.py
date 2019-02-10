@@ -108,6 +108,22 @@ class Tools:
 			self.errors.raise_error('Unknown type ' + value_type)
 			return value
 	
+	def type2str(self, value, value_format):
+		if self.errors.error_occured:
+			return None
+		
+		if value == None:
+			return ''
+		
+		if value_format == '%Y%m%d':
+			return dt.strftime(value, '%Y%m%d')
+			
+		elif value_format == '%H%M%S':
+			return dt.strftime(value, '%H%M%S')
+			
+		else:
+			return value_format.format(value)
+	
 	def shape_column_types(self, columns, file_column_types):
 		if self.errors.error_occured:
 			return None
@@ -142,6 +158,13 @@ class Tools:
 		
 		for col in rec:
 			rec[col] = self.str2type(rec[col], column_types[col])
+			
+	def str_rec(self, rec, column_formats):
+		if self.errors.error_occured:
+			return None
+		
+		for col in rec:
+			rec[col] = self.type2str(rec[col], column_formats[col])
 	
 	def add_rec_to_table(self, rec, table):
 		if self.errors.error_occured:
@@ -152,6 +175,16 @@ class Tools:
 				table[col].append(rec[col])
 			else:
 				table[col].append(None)
+	
+	def get_rec_from_table(self, rec_cnt, table):
+		if self.errors.error_occured:
+			return None
+		
+		rec = {}
+		for col in table:
+			rec[col] = table[col][rec_cnt]
+		
+		return rec
 	
 	def escape_sequence(self, seq):
 		if self.errors.error_occured:
