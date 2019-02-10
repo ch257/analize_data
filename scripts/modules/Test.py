@@ -58,13 +58,6 @@ class Test:
 		table, columns = csv_parser.csv2table(input_file_path, input_file_format)
 		
 		csv_parser.table2csv(table, columns, output_file_path, output_file_format)
-		# print(table['<DATE>'])
-		# print(table['<TIME>'])
-		
-		# print('{:.2f}'.format(1534.545))
-		# print('{}'.format('dfg'))
-		
-		
 		
 		if self.errors.error_occured:
 			self.errors.print_errors()
