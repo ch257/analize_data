@@ -2,7 +2,7 @@
 
 from modules.common.Errors import *
 from modules.common.IniParser import *
-from modules.common.Files import *
+# from modules.common.Files import *
 from modules.common.Tools import *
 from modules.common.CSVParser import *
 from modules.common.TableIterator import *
@@ -64,6 +64,12 @@ class Test:
 		itr = TableIterator(self.errors, table, columns)
 		while not itr.EOD:
 			rec = itr.get_next_rec()
+			# print(rec)
+			Si_C = rec.get('<Si_CLOSE>')
+			Eu_C = rec.get('<Eu_CLOSE>')
+			ED_C = rec.get('<ED_CLOSE>')
+			
+			print(Si_C, Eu_C, ED_C)
 		
 		csv_parser.table2csv(table, columns, output_file_path, output_file_format)
 		
