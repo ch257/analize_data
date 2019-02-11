@@ -185,6 +185,13 @@ class Tools:
 			rec[col] = table[col][rec_cnt]
 		
 		return rec
+		
+	def add_column(self, column, table, columns):
+		columns.append(column)
+		table[column] = []
+		length = len(table[columns[0]])
+		for i in range(length):
+			table[column].append(None)
 	
 	def escape_sequence(self, seq):
 		if self.errors.error_occured:

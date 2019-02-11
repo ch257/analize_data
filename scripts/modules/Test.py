@@ -5,6 +5,7 @@ from modules.common.IniParser import *
 from modules.common.Files import *
 from modules.common.Tools import *
 from modules.common.CSVParser import *
+from modules.common.TableIterator import *
 
 #######################
 
@@ -56,6 +57,13 @@ class Test:
 		
 		csv_parser = CSVParser(self.errors)
 		table, columns = csv_parser.csv2table(input_file_path, input_file_format)
+		
+		tools = Tools(self.errors)
+		tools.add_column('<GAMMA>', table, columns)
+		
+		itr = TableIterator(self.errors, table, columns)
+		while not itr.EOD:
+			rec = itr.get_next_rec()
 		
 		csv_parser.table2csv(table, columns, output_file_path, output_file_format)
 		
