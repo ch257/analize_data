@@ -2,12 +2,12 @@
 
 from modules.common.Errors import *
 from modules.common.IniParser import *
-# from modules.common.Files import *
 from modules.common.Tools import *
 from modules.common.CSVParser import *
 from modules.common.TableIterator import *
-
 #######################
+from modules.indicators.SMA import *
+from modules.indicators.EquityA import *
 
 
 class Test:
@@ -59,9 +59,14 @@ class Test:
 		table, columns = csv_parser.csv2table(input_file_path, input_file_format)
 		
 		tools = Tools(self.errors)
-		# tools.add_column('<GAMMA>', table, columns)
 		adv_columns = ['<GAMMA>', '<GAMMA_AVG>', '<DELTA>']
 		tools.add_columns(adv_columns, table, columns)
+		
+		N = 7
+		sma = SMA(21)
+		Si_eqv = EquityA()
+		Eu_eqv = EquityA()
+		ED_eqv = EquityA()
 		
 		itr = TableIterator(self.errors, table, columns)
 		while not itr.EOD:
@@ -71,9 +76,15 @@ class Test:
 			Eu_C = rec.get('<Eu_CLOSE>')
 			ED_C = rec.get('<ED_CLOSE>')
 			
-			gamma = 1
-			gamma_avg = 2
-			delta = 3
+			Si_eqv_val = Si_eqv.calc(Si_C)
+			Eu_eqv_val = Eu_eqv.calc(Eu_C)
+			ED_eqv_val = ED_eqv.calc(ED_C)
+			
+			gamma = (Eu_eqv_val - Si_eqv_val - ED_eqv_val * Si_C) * N - Si_eqv_val
+			gamma_avg = sma.calc(gamma)
+			delta = None
+			if gamma_avg != None:
+				delta = gamma - gamma_avg
 			
 			tools.update_cells(adv_columns, [gamma, gamma_avg, delta], rec_cnt, table)
 		
