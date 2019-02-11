@@ -186,24 +186,26 @@ class Tools:
 		
 		return rec
 		
-	def add_column(self, column, table, columns):
-		if self.errors.error_occured:
-			return None
-
-		columns.append(column)
-		table[column] = []
-		length = len(table[columns[0]])
-		for i in range(length):
-			table[column].append(None)
-	
 	def add_columns(self, adv_columns, table, columns):
 		if self.errors.error_occured:
 			return None
 		
 		for adv_col in adv_columns:
-			self.add_column(adv_col, table, columns)
+			columns.append(adv_col)
+			table[adv_col] = []
+			length = len(table[columns[0]])
+			for i in range(length):
+				table[adv_col].append(None)
 		
+	def update_cells(self, cell_columns, cell_values, rec_cnt, table):
+		if self.errors.error_occured:
+			return None
 		
+		length = min(len(cell_columns), len(cell_values))
+		for cnt in range(length):
+			if table.get(cell_columns[cnt]) != None:
+				table[cell_columns[cnt]][rec_cnt] = cell_values[cnt]
+				
 	def escape_sequence(self, seq):
 			
 		if seq == "'\\t'":

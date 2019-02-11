@@ -65,13 +65,17 @@ class Test:
 		
 		itr = TableIterator(self.errors, table, columns)
 		while not itr.EOD:
-			rec = itr.get_next_rec()
-			# print(rec)
+			rec, rec_cnt = itr.get_next_rec()
+			
 			Si_C = rec.get('<Si_CLOSE>')
 			Eu_C = rec.get('<Eu_CLOSE>')
 			ED_C = rec.get('<ED_CLOSE>')
 			
-			print(Si_C, Eu_C, ED_C)
+			gamma = 1
+			gamma_avg = 2
+			delta = 3
+			
+			tools.update_cells(adv_columns, [gamma, gamma_avg, delta], rec_cnt, table)
 		
 		csv_parser.table2csv(table, columns, output_file_path, output_file_format)
 		

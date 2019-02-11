@@ -20,6 +20,7 @@ class TableIterator:
 			self.EOD = True
 			return None
 			
+		rec_cnt = self.rec_cnt
 		if self.rec_cnt < self.length:
 			rec = self.tools.get_rec_from_table(self.rec_cnt, self.table)
 		else:
@@ -27,4 +28,5 @@ class TableIterator:
 			self.EOD = True
 		
 		self.rec_cnt += 1
-		return rec
+		
+		return rec, rec_cnt
