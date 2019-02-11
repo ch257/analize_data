@@ -59,7 +59,7 @@ class Test:
 		table, columns = csv_parser.csv2table(input_file_path, input_file_format)
 		
 		tools = Tools(self.errors)
-		adv_columns = ['<GAMMA>', '<GAMMA_AVG>', '<DELTA>']
+		adv_columns = ['<Si_EQV>', '<GAMMA>', '<GAMMA_AVG>', '<DELTA>']
 		tools.add_columns(adv_columns, table, columns)
 		
 		N = 7
@@ -76,9 +76,18 @@ class Test:
 			Eu_C = rec.get('<Eu_CLOSE>')
 			ED_C = rec.get('<ED_CLOSE>')
 			
-			Si_eqv_val = Si_eqv.calc(Si_C)
-			Eu_eqv_val = Eu_eqv.calc(Eu_C)
-			ED_eqv_val = ED_eqv.calc(ED_C)
+			if rec_cnt == 30:
+				lots = 5
+			elif rec_cnt == 40:
+				lots = -5
+			else:
+				lots = 0
+			Si_eqv_val = Si_eqv.calc(Si_C, lots)
+			Eu_eqv_val = Eu_eqv.calc(Eu_C, lots)
+			ED_eqv_val = ED_eqv.calc(ED_C, lots)
+			
+				
+				
 			
 			gamma = (Eu_eqv_val - Si_eqv_val - ED_eqv_val * Si_C) * N - Si_eqv_val
 			gamma_avg = sma.calc(gamma)
@@ -86,7 +95,7 @@ class Test:
 			if gamma_avg != None:
 				delta = gamma - gamma_avg
 			
-			tools.update_cells(adv_columns, [gamma, gamma_avg, delta], rec_cnt, table)
+			tools.update_cells(adv_columns, [Si_eqv_val, gamma, gamma_avg, delta], rec_cnt, table)
 		
 		csv_parser.table2csv(table, columns, output_file_path, output_file_format)
 		
