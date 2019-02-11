@@ -187,15 +187,24 @@ class Tools:
 		return rec
 		
 	def add_column(self, column, table, columns):
+		if self.errors.error_occured:
+			return None
+
 		columns.append(column)
 		table[column] = []
 		length = len(table[columns[0]])
 		for i in range(length):
 			table[column].append(None)
 	
-	def escape_sequence(self, seq):
+	def add_columns(self, adv_columns, table, columns):
 		if self.errors.error_occured:
 			return None
+		
+		for adv_col in adv_columns:
+			self.add_column(adv_col, table, columns)
+		
+		
+	def escape_sequence(self, seq):
 			
 		if seq == "'\\t'":
 			seq = seq.replace("'\\t'", '\t')
