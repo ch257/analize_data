@@ -8,7 +8,7 @@ class TableIterator:
 		self.errors = errors
 		self.tools = Tools(errors)
 		self.table = table
-		self.rec_cnt = 0
+		self.rec_cnt = -1
 		self.length = len(table[columns[0]]) - 1
 		if self.errors.error_occured or self.length < 0:
 			self.EOD = True
@@ -20,13 +20,11 @@ class TableIterator:
 			self.EOD = True
 			return None
 			
-		rec_cnt = self.rec_cnt
+		self.rec_cnt += 1
 		if self.rec_cnt < self.length:
 			rec = self.tools.get_rec_from_table(self.rec_cnt, self.table)
 		else:
 			rec = self.tools.get_rec_from_table(self.rec_cnt, self.table)
 			self.EOD = True
 		
-		self.rec_cnt += 1
-		
-		return rec, rec_cnt
+		return rec, self.rec_cnt
