@@ -9,6 +9,7 @@ from modules.common.TableIterator import *
 from modules.indicators.SMA import *
 from modules.indicators.EquityA import *
 from modules.signals.ArbitrageSignals import *
+from modules.trading.ArbitrageTrading import *
 
 
 class Test:
@@ -66,6 +67,7 @@ class Test:
 		N = 7
 		sma_per = 21
 		arb_sig = ArbitrageSignals(N, sma_per)
+		arb_trd = ArbitrageTrading()
 		
 		itr = TableIterator(self.errors, table, columns)
 		while not itr.EOD:
@@ -74,7 +76,8 @@ class Test:
 			Eu_C = rec.get('<Eu_CLOSE>')
 			ED_C = rec.get('<ED_CLOSE>')
 			
-			arb_sig.calc(Si_C, Eu_C, ED_C)
+			open_long, open_short, close_long, close_short = arb_sig.calc(Si_C, Eu_C, ED_C)
+			arb_trd.calc(open_long, open_short, close_long, close_short, Si_C, Si_C, Si_C)
 			
 			tools.update_cells(adv_columns, arb_sig.log, rec_cnt, table)
 		
