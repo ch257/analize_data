@@ -16,7 +16,7 @@ class ArbitrageSignals:
 		self.lots = 1
 	
 	def calc(self, Si_C, Eu_C, ED_C):
-		open_long, open_short, close_long, close_short = None, None, None, None
+		open_long, open_short, close_long, close_short = False, False, False, False
 		
 		Si_eqv_val = self.Si_eqv.calc(Si_C, self.lots)
 		Eu_eqv_val = self.Eu_eqv.calc(Eu_C, self.lots)
