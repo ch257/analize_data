@@ -133,9 +133,10 @@ class Tools:
 			if file_column_types.get(col) != None:
 				column_types[col] = file_column_types[col]
 			else:
-				self.errors.raise_error('Unknown column ' + col + ' for type detecting')
-				break
-		
+				# self.errors.raise_error('Unknown column ' + col + ' for type detecting')
+				# break
+				column_types[col] = 'num'
+				
 		return column_types
 		
 	def shape_column_formats(self, columns, all_column_formats):
@@ -147,8 +148,9 @@ class Tools:
 			if all_column_formats.get(col) != None:
 				column_formats[col] = all_column_formats[col]
 			else:
-				self.errors.raise_error('Unknown column ' + col + ' for format detecting')
-				break
+				# self.errors.raise_error('Unknown column ' + col + ' for format detecting')
+				# break
+				column_formats[col] = '{:.2f}'
 		
 		return column_formats
 	
