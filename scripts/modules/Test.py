@@ -8,6 +8,8 @@ from modules.common.TableIterator import *
 #######################
 from modules.indicators.SMA import *
 from modules.indicators.EquityA import *
+from modules.trading.OrdersHolder import *
+from modules.trading.OrdersExec import *
 from modules.signals.ArbitrageSignals import *
 from modules.trading.ArbitrageTrading import *
 
@@ -17,6 +19,7 @@ class Test:
 		self.errors = Errors()
 		self.ini_encoding = 'utf-8'
 		self.ini_parser = IniParser(self.errors)
+		
 		# self.settings = {}
 	
 	def read_settings(self, args):
@@ -64,10 +67,13 @@ class Test:
 		adv_columns = ['<GAMMA>', '<GAMMA_AVG>', '<DELTA>']
 		tools.add_columns(adv_columns, table, columns)
 		
+		order_holder = OrdersHolder()
+		order_exec = OrdersExec(order_holder)
+		
 		N = 7
 		sma_per = 21
 		arb_sig = ArbitrageSignals(N, sma_per)
-		arb_trd = ArbitrageTrading()
+		arb_trd = ArbitrageTrading(order_holder)
 		
 		itr = TableIterator(self.errors, table, columns)
 		while not itr.EOD:

@@ -5,7 +5,8 @@ from modules.indicators.EquityA import *
 
 class ArbitrageTrading:
 	
-	def __init__(self):
+	def __init__(self, order_holder):
+		self.order_holder = order_holder
 		self.log = []
 		self.lots = 0
 			
