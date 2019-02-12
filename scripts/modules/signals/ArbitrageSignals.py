@@ -7,6 +7,7 @@ from modules.indicators.EquityA import *
 class ArbitrageSignals:
 	
 	def __init__(self, N, sma_per):
+		self.log = []
 		self.sma = SMA(sma_per)
 		self.Si_eqv = EquityA()
 		self.Eu_eqv = EquityA()
@@ -27,6 +28,7 @@ class ArbitrageSignals:
 		if gamma_avg != None:
 			delta = gamma - gamma_avg
 			
+		self.log = [gamma, gamma_avg, delta]
 		self.lots = 0
-
+		
 		return open_long, open_short, close_long, close_short

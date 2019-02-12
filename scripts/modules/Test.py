@@ -65,43 +65,18 @@ class Test:
 		
 		N = 7
 		sma_per = 21
-		
-		
 		arb_sig = ArbitrageSignals(N, sma_per)
 		
 		itr = TableIterator(self.errors, table, columns)
 		while not itr.EOD:
 			rec, rec_cnt = itr.get_next_rec()
-			
 			Si_C = rec.get('<Si_CLOSE>')
 			Eu_C = rec.get('<Eu_CLOSE>')
 			ED_C = rec.get('<ED_CLOSE>')
 			
 			arb_sig.calc(Si_C, Eu_C, ED_C)
 			
-			# if rec_cnt == 30:
-				# lots = 5
-			# elif rec_cnt == 40:
-				# lots = -5
-			# else:
-				# lots = 0
-			# Si_eqv_val = Si_eqv.calc(Si_C, lots)
-			# Eu_eqv_val = Eu_eqv.calc(Eu_C, lots)
-			# ED_eqv_val = ED_eqv.calc(ED_C, lots)
-			
-				
-				
-			
-			# gamma = (Eu_eqv_val - Si_eqv_val - ED_eqv_val * Si_C) * N - Si_eqv_val
-			# gamma_avg = sma.calc(gamma)
-			# delta = None
-			# if gamma_avg != None:
-				# delta = gamma - gamma_avg
-				
-				
-			# adv_values = [gamma, gamma_avg, delta]
-			adv_values = [None, None, None]
-			tools.update_cells(adv_columns, adv_values, rec_cnt, table)
+			tools.update_cells(adv_columns, arb_sig.log, rec_cnt, table)
 		
 		csv_parser.table2csv(table, columns, output_file_path, output_file_format)
 		
