@@ -6,13 +6,14 @@ from modules.indicators.EquityA import *
 
 class ArbitrageSignals:
 	
-	def __init__(self, N, sma_per):
+	def __init__(self, N, sma_per, level):
 		self.log = []
+		self.N = N
+		self.level = level
 		self.sma = SMA(sma_per)
 		self.Si_eqv = EquityA()
 		self.Eu_eqv = EquityA()
 		self.ED_eqv = EquityA()
-		self.N = N
 		self.lots = 1
 	
 	def calc(self, Si_C, Eu_C, ED_C):
@@ -27,6 +28,15 @@ class ArbitrageSignals:
 		delta = None
 		if gamma_avg != None:
 			delta = gamma - gamma_avg
+			if delta > self.level:
+				open_short = True
+			elif delta < -self.level:
+				open_long = True
+			
+			if delta > 0:
+				close_long = True
+			elif delta < 0:
+				close_short = True
 			
 		self.log = [gamma, gamma_avg, delta]
 		self.lots = 0

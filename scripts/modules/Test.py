@@ -72,8 +72,9 @@ class Test:
 		
 		N = 7
 		sma_per = 21
-		arb_sig = ArbitrageSignals(N, sma_per)
-		arb_trd = ArbitrageTrading(order_holder)
+		level = 100
+		arb_sig = ArbitrageSignals(N, sma_per, level)
+		arb_trd = ArbitrageTrading(order_exec)
 		
 		itr = TableIterator(self.errors, table, columns)
 		while not itr.EOD:
@@ -83,7 +84,7 @@ class Test:
 			ED_C = rec.get('<ED_CLOSE>')
 			
 			open_long, open_short, close_long, close_short = arb_sig.calc(Si_C, Eu_C, ED_C)
-			arb_trd.calc(open_long, open_short, close_long, close_short, Si_C, Si_C, Si_C)
+			arb_trd.trade(open_long, open_short, close_long, close_short, Si_C, Si_C, Si_C)
 			
 			tools.update_cells(adv_columns, arb_sig.log, rec_cnt, table)
 		

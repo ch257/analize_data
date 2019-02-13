@@ -2,11 +2,13 @@
 
 from modules.indicators.Buffer import *
 
-class OrdersExec:
+class OrdersHolder:
 	
 	def __init__(self):
 		self.log = []
-			
-	def calc(self):
-		self.log = []
+		self.pending_orders = {}
+		self.open_orders = {}
+		self.open_lots = {}
+		
+	
 		
