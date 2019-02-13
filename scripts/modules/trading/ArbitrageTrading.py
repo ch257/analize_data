@@ -10,11 +10,11 @@ class ArbitrageTrading:
 		self.log = []
 		self.lots = 0
 			
-	def trade(self, open_long, open_short, close_long, close_short, high_price, low_price, market_price):
+	def trade(self, open_long, open_short, close_long, close_short):
 		if open_long:
-			self.order_exec.SellMarket()
+			self.order_exec.SellMarket(1)
 		if open_short:
-			self.order_exec.BuyMarket()
+			self.order_exec.BuyMarket(1)
 		
 		self.log = []
 		

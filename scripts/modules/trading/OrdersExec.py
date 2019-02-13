@@ -6,21 +6,27 @@ class OrdersExec:
 	
 	def __init__(self, order_holder):
 		self.log = []
+		self.order_holder = order_holder
+		self.market_price = 0
+
+	def exec(self, high_price, low_price, market_price):
+		self.market_price = market_price
 			
-	def BuyMarket(self):
+	def BuyMarket(self, lots):
+		self.order_holder.add_open_order(self.market_price, lots)
+
+	def SellMarket(self, lots):
+		self.order_holder.add_open_order(self.market_price, -lots)
+
+	def BuyLimit(self, lots, price):
 		pass
 
-	def SellMarket(self):
+	def SellLimit(self, lots, price):
 		pass
 
-	def BuyLimit(self):
-		pass
-
-	def SellLimit(self):
-		pass
-
-	def BuyStop(self):
+	def BuyStop(self, lots, price):
 		pass
 		
-	def SellStop(self):
+	def SellStop(self, lots, price):
 		pass
+		

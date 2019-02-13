@@ -83,8 +83,9 @@ class Test:
 			Eu_C = rec.get('<Eu_CLOSE>')
 			ED_C = rec.get('<ED_CLOSE>')
 			
+			order_exec.exec(Si_C, Si_C, Si_C)
 			open_long, open_short, close_long, close_short = arb_sig.calc(Si_C, Eu_C, ED_C)
-			arb_trd.trade(open_long, open_short, close_long, close_short, Si_C, Si_C, Si_C)
+			arb_trd.trade(open_long, open_short, close_long, close_short)
 			
 			tools.update_cells(adv_columns, arb_sig.log, rec_cnt, table)
 		
