@@ -64,9 +64,9 @@ class Test:
 		table, columns = csv_parser.csv2table(input_file_path, input_file_format)
 		
 		tools = Tools(self.errors)
-		adv_columns = ['<GAMMA>', '<GAMMA_AVG>', '<DELTA>']
+		adv_columns = ['<GAMMA>', '<GAMMA_AVG>', '<DELTA>', '<H_EQV>', '<L_EQV>']
 		tools.add_columns(adv_columns, table, columns)
-		
+				
 		order_holder = OrdersHolder()
 		order_exec = OrdersExec(order_holder)
 		
@@ -87,8 +87,12 @@ class Test:
 			open_long, open_short, close_long, close_short = arb_sig.calc(Si_C, Eu_C, ED_C)
 			arb_trd.trade(open_long, open_short, close_long, close_short)
 			
-			tools.update_cells(adv_columns, arb_sig.log, rec_cnt, table)
-		
+			adv_columns_vals = []
+			adv_columns_vals.extend(arb_sig.log)
+			adv_columns_vals.extend(order_exec.log)
+			tools.update_cells(adv_columns, adv_columns_vals, rec_cnt, table)
+			print(adv_columns_vals)
+			
 		csv_parser.table2csv(table, columns, output_file_path, output_file_format)
 		
 		if self.errors.error_occured:

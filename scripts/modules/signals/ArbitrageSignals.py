@@ -19,9 +19,9 @@ class ArbitrageSignals:
 	def calc(self, Si_C, Eu_C, ED_C):
 		open_long, open_short, close_long, close_short = False, False, False, False
 		
-		Si_eqv_val = self.Si_eqv.calc(Si_C, self.lots)
-		Eu_eqv_val = self.Eu_eqv.calc(Eu_C, self.lots)
-		ED_eqv_val = self.ED_eqv.calc(ED_C, self.lots)
+		Si_eqv_val = self.Si_eqv.calc_by_lots(Si_C, self.lots)
+		Eu_eqv_val = self.Eu_eqv.calc_by_lots(Eu_C, self.lots)
+		ED_eqv_val = self.ED_eqv.calc_by_lots(ED_C, self.lots)
 		
 		gamma = (Eu_eqv_val - Si_eqv_val - ED_eqv_val * Si_C) * self.N - Si_eqv_val
 		gamma_avg = self.sma.calc(gamma)
@@ -40,5 +40,4 @@ class ArbitrageSignals:
 			
 		self.log = [gamma, gamma_avg, delta]
 		self.lots = 0
-		
 		return open_long, open_short, close_long, close_short
