@@ -11,6 +11,7 @@ class OrdersExec:
 
 	def exec(self, high_price, low_price, market_price):
 		self.market_price = market_price
+		print(self.order_holder.open_orders_balance)
 			
 	def BuyMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, lots)
