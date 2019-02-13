@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*
 
 from modules.indicators.Buffer import *
-from modules.indicators.EquityA import *
 
 class ArbitrageTrading:
 	

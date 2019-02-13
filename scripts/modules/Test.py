@@ -83,7 +83,7 @@ class Test:
 			Eu_C = rec.get('<Eu_CLOSE>')
 			ED_C = rec.get('<ED_CLOSE>')
 			
-			order_exec.exec(Si_C, Si_C, Si_C)
+			order_exec.exec(Eu_C, Eu_C, Eu_C)
 			open_long, open_short, close_long, close_short = arb_sig.calc(Si_C, Eu_C, ED_C)
 			arb_trd.trade(open_long, open_short, close_long, close_short)
 			
