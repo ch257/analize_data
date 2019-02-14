@@ -28,10 +28,12 @@ class OrdersExec:
 	def BuyMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, lots)
 		self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, lots)
+		self.log[2] = self.result_eqv_val
 
 	def SellMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, -lots)
 		self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, -lots)
+		self.log[2] = self.result_eqv_val
 
 	def BuyLimit(self, lots, price):
 		pass
