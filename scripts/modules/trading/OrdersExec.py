@@ -11,19 +11,26 @@ class OrdersExec:
 		self.market_price = 0
 		self.h_eqv = EquityA()
 		self.l_eqv = EquityA()
+		self.result_eqv = EquityA()
+		self.result_eqv_val = 0
 
 	def exec(self, high_price, low_price, market_price):
 		self.market_price = market_price
 		h_eqv_val = self.h_eqv.calc_by_lots_balance(high_price, self.order_holder.open_lots_balance)
 		l_eqv_val = self.l_eqv.calc_by_lots_balance(low_price, self.order_holder.open_lots_balance)
-		self.log = [h_eqv_val, l_eqv_val]
+		
+		self.result_eqv.calc_by_lots(self.market_price, 0)
+		self.log = [h_eqv_val, l_eqv_val, self.result_eqv_val]
+		# if self.order_holder.open_lots_balance:
 		# print(self.order_holder.open_lots_balance)
 			
 	def BuyMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, lots)
+		self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, lots)
 
 	def SellMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, -lots)
+		self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, -lots)
 
 	def BuyLimit(self, lots, price):
 		pass
