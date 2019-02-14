@@ -91,7 +91,7 @@ class Test:
 			adv_columns_vals.extend(arb_sig.log)
 			adv_columns_vals.extend(order_exec.log)
 			tools.update_cells(adv_columns, adv_columns_vals, rec_cnt, table)
-			print(adv_columns_vals)
+			# print(adv_columns_vals)
 			
 		csv_parser.table2csv(table, columns, output_file_path, output_file_format)
 		
