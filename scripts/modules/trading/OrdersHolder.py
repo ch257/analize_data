@@ -31,7 +31,14 @@ class OrdersHolder:
 			'date': None,
 			'time': None,
 			'price': price,
-			'lots': lots
+			'lots': lots,
+			'status': 'reg'
 		}
 		
 		self.pending_order_cnt += 1
+		
+	def exec_pending_order(self, _idx):
+		price = self.pending_orders[_idx]['price']
+		lots = self.pending_orders[_idx]['lots']
+		self.add_open_order(price, lots)
+		self.pending_orders[_idx]['status'] = 'ex'

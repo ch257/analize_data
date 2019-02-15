@@ -25,3 +25,4 @@ class EquityA:
 		self.buffer.slide(new_item)
 		return self.eqv
 
+
