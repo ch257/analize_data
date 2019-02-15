@@ -82,13 +82,13 @@ class OrdersExec:
 			type = self.order_holder.pending_orders[_idx]['type']
 			lots = self.order_holder.pending_orders[_idx]['lots']
 			if type == 'limit' and lots > 0:
-				cancel_pending_order(self, _idx):
+				self.order_holder.cancel_pending_order(self, _idx)
 	
 	def CancelSellLimits(self):
 		for _idx in self.order_holder.pending_orders:
 			type = self.order_holder.pending_orders[_idx]['type']
 			lots = self.order_holder.pending_orders[_idx]['lots']
 			if type == 'limit' and lots < 0:
-				cancel_pending_order(self, _idx):
+				self.order_holder.cancel_pending_order(self, _idx)
 	
 		
