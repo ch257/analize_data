@@ -11,6 +11,8 @@ class OrdersHolder:
 		self.open_lots = {}
 		
 		self.open_order_cnt = 0
+		self.stop_order_cnt = 0
+		self.limit_order_cnt = 0
 		self.pending_order_cnt = 0
 		
 		self.open_lots_balance = 0
@@ -35,14 +37,28 @@ class OrdersHolder:
 			'status': 'reg',
 			'type': type
 		}
+		if type == 'stop':
+			self.stop_order_cnt += 1
+		elif type == 'limit':
+			self.limit_order_cnt += 1
 		
 		self.pending_order_cnt += 1
 		
 	def exec_pending_order(self, _idx):
 		price = self.pending_orders[_idx]['price']
 		lots = self.pending_orders[_idx]['lots']
+		type = self.pending_orders[_idx]['type']
 		self.add_open_order(price, lots)
 		self.pending_orders[_idx]['status'] = 'ex'
+		if type == 'stop':
+			self.stop_order_cnt -= 1
+		elif type == 'limit':
+			self.limit_order_cnt -= 1
 		
 	def cancel_pending_order(self, _idx):
+		type = self.pending_orders[_idx]['type']
 		self.pending_orders[_idx]['status'] = 'cncl'
+		if type == 'stop':
+			self.stop_order_cnt -= 1
+		elif type == 'limit':
+			self.limit_order_cnt -= 1
