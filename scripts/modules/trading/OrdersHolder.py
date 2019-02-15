@@ -34,7 +34,7 @@ class OrdersHolder:
 			'time': None,
 			'price': price,
 			'lots': lots,
-			'status': 'reg',
+			'status': 'act',
 			'type': type
 		}
 		if type == 'stop':

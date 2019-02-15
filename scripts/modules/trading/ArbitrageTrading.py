@@ -10,12 +10,16 @@ class ArbitrageTrading:
 		self.lots = 0
 			
 	def trade(self, open_long, open_short, close_long, close_short, market_price):
-		if close_long and self.order_exec.order_holder.open_lots_balance > 0:
-			pass
-		if close_short and self.order_exec.order_holder.open_lots_balance < 0:
-			pass
+		if close_long 
+			if self.order_exec.order_holder.open_lots_balance > 0:
+				pass
+		if close_short
+			if self.order_exec.order_holder.open_lots_balance < 0:
+				pass
 
-		if self.order_exec.order_holder.open_lots_balance == 0:	
+		if (self.order_exec.order_holder.open_lots_balance == 0
+			and self.order_exec.order_holder.stop_order_cnt == 0
+			and self.order_exec.order_holder.limit_order_cnt == 0):	
 			if open_long:
 				self.order_exec.BuyLimit(1, market_price - 10)
 			if open_short:

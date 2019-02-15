@@ -28,7 +28,7 @@ class OrdersExec:
 			price = self.order_holder.pending_orders[_idx]['price']
 			lots = self.order_holder.pending_orders[_idx]['lots']
 			print(price, lots, status)
-			if status == 'reg':
+			if status == 'act':
 				if type == 'limit':
 					if lots > 0:
 						if low_price < price:
@@ -76,4 +76,19 @@ class OrdersExec:
 	def SellStop(self, lots, price):
 		if price < self.market_price:
 			self.order_holder.add_pending_order(price, -lots, 'stop')
+			
+	def CancelBuyLimits(self):
+		for _idx in self.order_holder.pending_orders:
+			type = self.order_holder.pending_orders[_idx]['type']
+			lots = self.order_holder.pending_orders[_idx]['lots']
+			if type == 'limit' and lots > 0:
+				cancel_pending_order(self, _idx):
+	
+	def CancelSellLimits(self):
+		for _idx in self.order_holder.pending_orders:
+			type = self.order_holder.pending_orders[_idx]['type']
+			lots = self.order_holder.pending_orders[_idx]['lots']
+			if type == 'limit' and lots < 0:
+				cancel_pending_order(self, _idx):
+	
 		
