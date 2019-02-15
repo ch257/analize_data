@@ -26,13 +26,14 @@ class OrdersHolder:
 		self.open_order_cnt += 1
 		self.open_lots_balance += lots
 	
-	def add_pending_order(self, price, lots):
+	def add_pending_order(self, price, lots, type):
 		self.pending_orders[self.pending_order_cnt] = {
 			'date': None,
 			'time': None,
 			'price': price,
 			'lots': lots,
-			'status': 'reg'
+			'status': 'reg',
+			'type': type
 		}
 		
 		self.pending_order_cnt += 1
@@ -42,3 +43,6 @@ class OrdersHolder:
 		lots = self.pending_orders[_idx]['lots']
 		self.add_open_order(price, lots)
 		self.pending_orders[_idx]['status'] = 'ex'
+		
+	def cancel_pending_order(self, _idx):
+		self.pending_orders[_idx]['status'] = 'cncl'

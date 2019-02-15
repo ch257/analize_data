@@ -23,17 +23,26 @@ class OrdersExec:
 		self.high_price = high_price
 		self.low_price = low_price
 		for _idx in self.order_holder.pending_orders:
-			price = self.order_holder.pending_orders[_idx]['price']
 			status = self.order_holder.pending_orders[_idx]['status']
+			type = self.order_holder.pending_orders[_idx]['type']
+			price = self.order_holder.pending_orders[_idx]['price']
 			lots = self.order_holder.pending_orders[_idx]['lots']
 			print(price, lots, status)
 			if status == 'reg':
-				if lots > 0:
-					if low_price < price:
-						self.order_holder.exec_pending_order(_idx)
-				elif lots < 0:
-					if high_price > price:
-						self.order_holder.exec_pending_order(_idx)
+				if type == 'limit':
+					if lots > 0:
+						if low_price < price:
+							self.order_holder.exec_pending_order(_idx)
+					elif lots < 0:
+						if high_price > price:
+							self.order_holder.exec_pending_order(_idx)
+				elif type == 'stop':
+					if lots < 0:
+						if low_price < price:
+							self.order_holder.exec_pending_order(_idx)
+					elif lots > 0:
+						if high_price > price:
+							self.order_holder.exec_pending_order(_idx)
 			
 		
 	def calc_equty(self):
@@ -54,15 +63,17 @@ class OrdersExec:
 
 	def BuyLimit(self, lots, price):
 		if price < self.market_price:
-			self.order_holder.add_pending_order(price, lots)
+			self.order_holder.add_pending_order(price, lots, 'limit')
 
 	def SellLimit(self, lots, price):
 		if price > self.market_price:
-			self.order_holder.add_pending_order(price, -lots)
+			self.order_holder.add_pending_order(price, -lots, 'limit')
 
 	def BuyStop(self, lots, price):
-		pass
+		if price > self.market_price:
+			self.order_holder.add_pending_order(price, lots, 'stop')
 		
 	def SellStop(self, lots, price):
-		pass
+		if price < self.market_price:
+			self.order_holder.add_pending_order(price, -lots, 'stop')
 		
