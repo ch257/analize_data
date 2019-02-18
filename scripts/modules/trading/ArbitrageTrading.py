@@ -33,17 +33,17 @@ class ArbitrageTrading:
 			# self.allow_once = False
 			
 		if self.cnt == 40:
-			self.order_exec.SellMarket(1)
-			# self.order_exec.BuyMarket(1)
+			# self.order_exec.SellMarket(1)
+			self.order_exec.BuyMarket(1)
 		if self.cnt == 50:
-			self.order_exec.SellMarket(1)
-			# self.order_exec.BuyMarket(1)
+			# self.order_exec.SellMarket(1)
+			self.order_exec.BuyMarket(1)
 		if self.cnt == 60:
-			self.order_exec.SellMarket(1)
-			# self.order_exec.BuyMarket(1)
+			# self.order_exec.SellMarket(1)
+			self.order_exec.BuyMarket(1)
 		if self.cnt == 80:
-			self.order_exec.BuyMarket(4)
-			# self.order_exec.SellMarket(3)
+			# self.order_exec.BuyMarket(4)
+			self.order_exec.SellMarket(4)
 			
 	
 		# if close_long:

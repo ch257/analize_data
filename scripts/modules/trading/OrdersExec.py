@@ -24,7 +24,7 @@ class OrdersExec:
 		self.high_price = high_price
 		self.low_price = low_price
 		print(self.order_holder.open_orders)
-		print(self.non_loss_price())
+		# print(self.non_loss_price())
 		# for _idx in self.order_holder.pending_orders:
 			# status = self.order_holder.pending_orders[_idx]['status']
 			# type = self.order_holder.pending_orders[_idx]['type']

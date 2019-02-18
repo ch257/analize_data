@@ -39,24 +39,61 @@ class OrdersHolder:
 		}
 		self.open_orders_log[len(self.open_orders_log)] = order
 		
-		self.prev_lots_balance = self.open_lots_balance
-		self.open_lots_balance += lots
-		if self.prev_lots_balance > 0:
-			if self.open_lots_balance  <= 0:
-				self.open_orders = {}
-				if self.open_lots_balance < 0:
-					self.open_orders[len(self.open_orders)] = order
-			elif self.open_lots_balance  > 0:
+		if self.open_lots_balance > 0:
+			if order['lots'] < 0:
+				remain_lots = order['lots']
+				_idx = 0
+				while _idx < len(self.open_orders) and remain_lots <= 0:
+					open_order = self.open_orders[_idx]
+					remain_lots += open_order['lots']
+					_idx += 1
+				if remain_lots > 0:
+					self.open_orders[_idx - 1]['lots'] = remain_lots
+					for _i in range(len(self.open_orders)):
+						if _idx - 1 < len(self.open_orders):
+							self.open_orders[_i] = self.open_orders[_idx - 1]
+						else:	
+							self.open_orders.pop(_i)
+						_idx += 1
+				elif remain_lots < 0:
+					order['lots'] = remain_lots
+					self.open_orders = {}
+					self.open_orders[0] = order
+				else:
+					self.open_orders = {}
+			elif order['lots'] > 0:
 				self.open_orders[len(self.open_orders)] = order
-		elif self.prev_lots_balance < 0:
-			if self.open_lots_balance  >= 0:
-				self.open_orders = {}
-				if self.open_lots_balance > 0:
-					self.open_orders[len(self.open_orders)] = order
-			elif self.open_lots_balance  < 0:
+		
+		elif self.open_lots_balance < 0:
+			if order['lots'] > 0:
+				remain_lots = order['lots']
+				_idx = 0
+				while _idx < len(self.open_orders) and remain_lots >= 0:
+					open_order = self.open_orders[_idx]
+					remain_lots += open_order['lots']
+					_idx += 1
+				if remain_lots < 0:
+					self.open_orders[_idx - 1]['lots'] = remain_lots
+					for _i in range(len(self.open_orders)):
+						if _idx - 1 < len(self.open_orders):
+							self.open_orders[_i] = self.open_orders[_idx - 1]
+						else:	
+							self.open_orders.pop(_i)
+						_idx += 1
+				elif remain_lots > 0:
+					order['lots'] = remain_lots
+					self.open_orders = {}
+					self.open_orders[0] = order
+				else:
+					self.open_orders = {}
+			elif order['lots'] < 0:
 				self.open_orders[len(self.open_orders)] = order
+				
 		else:
 			self.open_orders[len(self.open_orders)] = order
+				
+		self.prev_lots_balance = self.open_lots_balance
+		self.open_lots_balance += lots
 	
 	# def add_pending_order(self, price, lots, type):
 		# self.pending_orders[len(self.pending_orders)] = {
