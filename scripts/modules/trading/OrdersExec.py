@@ -24,6 +24,7 @@ class OrdersExec:
 		self.high_price = high_price
 		self.low_price = low_price
 		print(self.order_holder.open_orders)
+		print(self.non_loss_price())
 		# for _idx in self.order_holder.pending_orders:
 			# status = self.order_holder.pending_orders[_idx]['status']
 			# type = self.order_holder.pending_orders[_idx]['type']
@@ -51,7 +52,18 @@ class OrdersExec:
 		self.result_eqv.calc_by_lots(self.market_price, 0)
 		self.h_eqv_val = self.h_eqv.calc_by_lots_balance(self.high_price, self.order_holder.open_lots_balance)
 		self.l_eqv_val = self.l_eqv.calc_by_lots_balance(self.low_price, self.order_holder.open_lots_balance)
-		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val]
+		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val, self.non_loss_price()]
+		
+	def non_loss_price(self):
+		nlp = None
+		if len(self.order_holder.open_orders) > 0:
+			nlp = 0
+			for _idx in self.order_holder.open_orders:
+				order = self.order_holder.open_orders[_idx]
+				nlp += order['price'] * order['lots']
+			nlp = nlp / self.order_holder.open_lots_balance
+		
+		return nlp
 		
 	def BuyMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, lots)

@@ -64,7 +64,7 @@ class Test:
 		table, columns = csv_parser.csv2table(input_file_path, input_file_format)
 		
 		tools = Tools(self.errors)
-		adv_columns = ['<GAMMA>', '<GAMMA_AVG>', '<DELTA>', '<H_EQV>', '<L_EQV>', '<RES_EQV>']
+		adv_columns = ['<GAMMA>', '<GAMMA_AVG>', '<DELTA>', '<H_EQV>', '<L_EQV>', '<RES_EQV>', '<NON_LOSS_PRICE>']
 		tools.add_columns(adv_columns, table, columns)
 				
 		
