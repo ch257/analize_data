@@ -58,10 +58,12 @@ class OrdersExec:
 		nlp = None
 		if len(self.order_holder.open_orders) > 0:
 			nlp = 0
+			lots_sum = 0
 			for _idx in self.order_holder.open_orders:
 				order = self.order_holder.open_orders[_idx]
 				nlp += order['price'] * order['lots']
-			nlp = nlp / self.order_holder.open_lots_balance
+				lots_sum += order['lots']
+			nlp = nlp / lots_sum
 		
 		return nlp
 		

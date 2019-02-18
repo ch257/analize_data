@@ -42,7 +42,7 @@ class ArbitrageTrading:
 			self.order_exec.SellMarket(1)
 			# self.order_exec.BuyMarket(1)
 		if self.cnt == 80:
-			self.order_exec.BuyMarket(2)
+			self.order_exec.BuyMarket(4)
 			# self.order_exec.SellMarket(3)
 			
 	
