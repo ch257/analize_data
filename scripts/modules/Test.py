@@ -67,8 +67,8 @@ class Test:
 		adv_columns = ['<GAMMA>', '<GAMMA_AVG>', '<DELTA>', '<H_EQV>', '<L_EQV>', '<RES_EQV>']
 		tools.add_columns(adv_columns, table, columns)
 				
-		order_holder = OrdersHolder()
-		order_exec = OrdersExec(order_holder)
+		
+		order_exec = OrdersExec()
 		
 		N = 7
 		sma_per = 21
