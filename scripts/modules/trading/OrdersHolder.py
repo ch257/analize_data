@@ -31,14 +31,32 @@ class OrdersHolder:
 
 		
 	def add_open_order(self, price, lots):
-		self.open_orders_log[len(self.open_orders_log)] = {
-			'date': None,
-			'time': None,
+		order = {
+			# 'date': None,
+			# 'time': None,
 			'price': price,
 			'lots': lots
 		}
+		self.open_orders_log[len(self.open_orders_log)] = order
 		
+		self.prev_lots_balance = self.open_lots_balance
 		self.open_lots_balance += lots
+		if self.prev_lots_balance > 0:
+			if self.open_lots_balance  <= 0:
+				self.open_orders = {}
+				if self.open_lots_balance < 0:
+					self.open_orders[len(self.open_orders)] = order
+			elif self.open_lots_balance  > 0:
+				self.open_orders[len(self.open_orders)] = order
+		elif self.prev_lots_balance < 0:
+			if self.open_lots_balance  >= 0:
+				self.open_orders = {}
+				if self.open_lots_balance > 0:
+					self.open_orders[len(self.open_orders)] = order
+			elif self.open_lots_balance  < 0:
+				self.open_orders[len(self.open_orders)] = order
+		else:
+			self.open_orders[len(self.open_orders)] = order
 	
 	# def add_pending_order(self, price, lots, type):
 		# self.pending_orders[len(self.pending_orders)] = {
