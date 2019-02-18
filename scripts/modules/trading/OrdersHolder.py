@@ -30,15 +30,15 @@ class OrdersHolder:
 		# self.last_sell_limit_price = 0
 
 		
-	# def add_open_order(self, price, lots):
-		# self.open_orders[self.open_order_cnt] = {
-			# 'date': None,
-			# 'time': None,
-			# 'price': price,
-			# 'lots': lots
-		# }
+	def add_open_order(self, price, lots):
+		self.open_orders_log[len(self.open_orders_log)] = {
+			'date': None,
+			'time': None,
+			'price': price,
+			'lots': lots
+		}
 		
-		# self.open_lots_balance += lots
+		self.open_lots_balance += lots
 	
 	# def add_pending_order(self, price, lots, type):
 		# self.pending_orders[len(self.pending_orders)] = {

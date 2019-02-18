@@ -51,14 +51,15 @@ class OrdersExec:
 		self.h_eqv_val = self.h_eqv.calc_by_lots_balance(self.high_price, self.order_holder.open_lots_balance)
 		self.l_eqv_val = self.l_eqv.calc_by_lots_balance(self.low_price, self.order_holder.open_lots_balance)
 		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val]
+		print(self.log)
 		
 	def BuyMarket(self, lots):
-		# self.order_holder.add_open_order(self.market_price, lots)
+		self.order_holder.add_open_order(self.market_price, lots)
 		self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, lots)
 		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val]
 
 	def SellMarket(self, lots):
-		# self.order_holder.add_open_order(self.market_price, -lots)
+		self.order_holder.add_open_order(self.market_price, -lots)
 		self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, -lots)
 		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val]
 

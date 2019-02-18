@@ -9,6 +9,7 @@ class ArbitrageTrading:
 		self.order_holder = order_exec.order_holder
 		self.allow_once = True
 		self.log = []
+		self.cnt = 1
 			
 	def orders_state(self):
 		BuyState, SellState, HasStopLoss, HasTakeProfit = False, False, False, False
@@ -22,14 +23,23 @@ class ArbitrageTrading:
 	def trade(self, open_long, open_short, close_long, close_short, market_price):
 		BuyState, SellState, HasStopLoss, HasTakeProfit = self.orders_state()
 		
-		if self.allow_once:
-			if not (BuyState or SellState):
-				if open_long:
-					self.order_exec.BuyMarket(1)
-				if open_short:
-					self.order_exec.SellMarket(1)
+		# if self.allow_once:
+			# if not (BuyState or SellState):
+				# if open_long:
+					# self.order_exec.BuyMarket(1)
+				# if open_short:
+					# self.order_exec.SellMarket(1)
 			
-			self.allow_once = False
+			# self.allow_once = False
+			
+		if self.cnt == 40:
+			self.order_exec.SellMarket(1)
+		if self.cnt == 50:
+			self.order_exec.SellMarket(1)
+		if self.cnt == 60:
+			self.order_exec.SellMarket(1)
+			
+	
 		# if close_long:
 			# if self.order_exec.order_holder.open_lots_balance > 0:
 				# pass
@@ -58,5 +68,5 @@ class ArbitrageTrading:
 				# self.order_exec.BuyStop(1, market_price + 40)
 		
 		self.log = []
-
+		self.cnt += 1
 		
