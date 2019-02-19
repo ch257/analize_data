@@ -35,15 +35,15 @@ class ArbitrageTrading:
 		if self.cnt == 40:
 			# self.order_exec.SellMarket(1)
 			# self.order_exec.BuyMarket(1)
-			self.order_exec.SellLimit(1, market_price + 20)
+			self.order_exec.SellLimit(1, market_price + 10)
 		if self.cnt == 50:
 			# self.order_exec.SellMarket(1)
 			# self.order_exec.BuyMarket(1)
-			self.order_exec.SellLimit(1, market_price + 20)
+			self.order_exec.SellLimit(1, market_price + 10)
 		if self.cnt == 60:
 			# self.order_exec.SellMarket(1)
 			# self.order_exec.BuyMarket(1)
-			self.order_exec.SellLimit(1, market_price + 20)
+			self.order_exec.SellLimit(1, market_price + 10)
 		# if self.cnt == 80:
 			# self.order_exec.BuyMarket(4)
 			# self.order_exec.SellMarket(4)

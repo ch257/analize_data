@@ -101,7 +101,8 @@ class OrdersHolder:
 			# 'time': None,
 			'price': price,
 			'lots': lots,
-			'type': type
+			'type': type,
+			'status': 'act'
 		}
 		if type == 'stop':
 			if lots > 0:
@@ -114,24 +115,22 @@ class OrdersHolder:
 			elif lots < 0:
 				self.sell_limit_lots_balance += lots
 		
-	# def exec_pending_order(self, _idx):
-		# price = self.pending_orders[_idx]['price']
-		# lots = self.pending_orders[_idx]['lots']
-		# type = self.pending_orders[_idx]['type']
-		# self.add_open_order(price, lots)
-		# self.pending_orders[_idx]['status'] = 'ex'
-		# if type == 'stop':
-			# if lots > 0:
-				# self.buy_stop_order_cnt -= 1
-			# elif lots < 0:
-				# self.sell_stop_order_cnt -= 1
-			# self.stop_order_cnt -= 1
-		# elif type == 'limit':
-			# if lots > 0:
-				# self.buy_limit_order_cnt -= 1
-			# elif lots < 0:
-				# self.sell_limit_order_cnt -= 1
-			# self.limit_order_cnt -= 1
+	def exec_pending_order(self, _idx):
+		price = self.pending_orders[_idx]['price']
+		lots = self.pending_orders[_idx]['lots']
+		type = self.pending_orders[_idx]['type']
+		self.add_open_order(price, lots)
+		self.pending_orders[_idx]['status'] = 'ex'
+		if type == 'stop':
+			if lots > 0:
+				self.buy_stop_lots_balance -= lots
+			elif lots < 0:
+				self.sell_stop_lots_balance -= lots
+		elif type == 'limit':
+			if lots > 0:
+				self.buy_limit_lots_balance -= lots
+			elif lots < 0:
+				self.sell_limit_lots_balance -= lots
 		
 	# def cancel_pending_order(self, _idx):
 		# type = self.pending_orders[_idx]['type']

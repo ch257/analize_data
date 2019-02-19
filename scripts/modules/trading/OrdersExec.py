@@ -23,31 +23,30 @@ class OrdersExec:
 		self.market_price = market_price
 		self.high_price = high_price
 		self.low_price = low_price
-		# print(self.order_holder.open_orders)
-		print('P:', self.order_holder.pending_orders)
+		# print('P:', self.order_holder.pending_orders)
+		print('O:', self.order_holder.open_orders)
 		# print(self.non_loss_price())
-		# for _idx in self.order_holder.pending_orders:
-			# status = self.order_holder.pending_orders[_idx]['status']
-			# type = self.order_holder.pending_orders[_idx]['type']
-			# price = self.order_holder.pending_orders[_idx]['price']
-			# lots = self.order_holder.pending_orders[_idx]['lots']
-			# print(price, lots, status)
-			# if status == 'act':
-				# if type == 'limit':
-					# if lots > 0:
-						# if low_price < price:
-							# self.order_holder.exec_pending_order(_idx)
-					# elif lots < 0:
-						# if high_price > price:
-							# self.order_holder.exec_pending_order(_idx)
-				# elif type == 'stop':
-					# if lots < 0:
-						# if low_price < price:
-							# self.order_holder.exec_pending_order(_idx)
-					# elif lots > 0:
-						# if high_price > price:
-							# self.order_holder.exec_pending_order(_idx)
-			
+		for _idx in self.order_holder.pending_orders:
+			status = self.order_holder.pending_orders[_idx]['status']
+			type = self.order_holder.pending_orders[_idx]['type']
+			price = self.order_holder.pending_orders[_idx]['price']
+			lots = self.order_holder.pending_orders[_idx]['lots']
+			if status == 'act':
+				if type == 'limit':
+					if lots > 0:
+						if low_price < price:
+							self.order_holder.exec_pending_order(_idx)
+					elif lots < 0:
+						if high_price > price:
+							self.order_holder.exec_pending_order(_idx)
+				elif type == 'stop':
+					if lots < 0:
+						if low_price < price:
+							self.order_holder.exec_pending_order(_idx)
+					elif lots > 0:
+						if high_price > price:
+							self.order_holder.exec_pending_order(_idx)
+		
 		
 	def calc_equty(self):
 		self.result_eqv.calc_by_lots(self.market_price, 0)
@@ -71,13 +70,13 @@ class OrdersExec:
 	def BuyMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, lots)
 		self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, lots)
-		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val]
+		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val, self.non_loss_price()]
 		# print('Buy:', self.market_price)
 
 	def SellMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, -lots)
 		self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, -lots)
-		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val]
+		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val, self.non_loss_price()]
 		# print('Sell:', self.market_price)
 
 	def BuyLimit(self, lots, price):
