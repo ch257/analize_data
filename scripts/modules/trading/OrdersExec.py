@@ -18,6 +18,9 @@ class OrdersExec:
 		self.h_eqv_val = 0
 		self.l_eqv_val = 0
 		self.result_eqv_val = 0
+		
+	def fill_log(self):
+		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val, self.non_loss_price()]
 
 	def exec_orders(self, high_price, low_price, market_price):
 		self.market_price = market_price
@@ -52,7 +55,7 @@ class OrdersExec:
 		self.result_eqv.calc_by_lots(self.market_price, 0)
 		self.h_eqv_val = self.h_eqv.calc_by_lots_balance(self.high_price, self.order_holder.open_lots_balance)
 		self.l_eqv_val = self.l_eqv.calc_by_lots_balance(self.low_price, self.order_holder.open_lots_balance)
-		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val, self.non_loss_price()]
+		self.fill_log()
 		
 	def non_loss_price(self):
 		nlp = None
@@ -70,13 +73,13 @@ class OrdersExec:
 	def BuyMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, lots)
 		self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, lots)
-		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val, self.non_loss_price()]
+		self.fill_log()
 		# print('Buy:', self.market_price)
 
 	def SellMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, -lots)
 		self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, -lots)
-		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val, self.non_loss_price()]
+		self.fill_log()
 		# print('Sell:', self.market_price)
 
 	def BuyLimit(self, lots, price):
