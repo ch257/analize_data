@@ -87,26 +87,40 @@ class OrdersExec:
 		if price > self.market_price:
 			self.order_holder.add_pending_order(price, -lots, 'limit')
 
-	# def BuyStop(self, lots, price):
-		# if price > self.market_price:
-			# self.order_holder.add_pending_order(price, lots, 'stop')
+	def BuyStop(self, lots, price):
+		if price > self.market_price:
+			self.order_holder.add_pending_order(price, lots, 'stop')
 		
-	# def SellStop(self, lots, price):
-		# if price < self.market_price:
-			# self.order_holder.add_pending_order(price, -lots, 'stop')
+	def SellStop(self, lots, price):
+		if price < self.market_price:
+			self.order_holder.add_pending_order(price, -lots, 'stop')
 			
-	# def CancelBuyLimits(self):
-		# for _idx in self.order_holder.pending_orders:
-			# type = self.order_holder.pending_orders[_idx]['type']
-			# lots = self.order_holder.pending_orders[_idx]['lots']
-			# if type == 'limit' and lots > 0:
-				# self.order_holder.cancel_pending_order(_idx)
+	def CancelBuyLimits(self):
+		for _idx in self.order_holder.pending_orders:
+			type = self.order_holder.pending_orders[_idx]['type']
+			lots = self.order_holder.pending_orders[_idx]['lots']
+			if type == 'limit' and lots > 0:
+				self.order_holder.cancel_pending_order(_idx)
 	
-	# def CancelSellLimits(self):
-		# for _idx in self.order_holder.pending_orders:
-			# type = self.order_holder.pending_orders[_idx]['type']
-			# lots = self.order_holder.pending_orders[_idx]['lots']
-			# if type == 'limit' and lots < 0:
-				# self.order_holder.cancel_pending_order(_idx)
+	def CancelSellLimits(self):
+		for _idx in self.order_holder.pending_orders:
+			type = self.order_holder.pending_orders[_idx]['type']
+			lots = self.order_holder.pending_orders[_idx]['lots']
+			if type == 'limit' and lots < 0:
+				self.order_holder.cancel_pending_order(_idx)
+				
+	def CancelBuyStops(self):
+		for _idx in self.order_holder.pending_orders:
+			type = self.order_holder.pending_orders[_idx]['type']
+			lots = self.order_holder.pending_orders[_idx]['lots']
+			if type == 'stop' and lots > 0:
+				self.order_holder.cancel_pending_order(_idx)
+	
+	def CancelSellStops(self):
+		for _idx in self.order_holder.pending_orders:
+			type = self.order_holder.pending_orders[_idx]['type']
+			lots = self.order_holder.pending_orders[_idx]['lots']
+			if type == 'stop' and lots < 0:
+				self.order_holder.cancel_pending_order(_idx)
 	
 		
