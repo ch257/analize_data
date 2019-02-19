@@ -39,17 +39,20 @@ class OrdersExec:
 					if lots > 0:
 						if low_price < price:
 							self.order_holder.exec_pending_order(_idx)
+							self.result_eqv_val = self.result_eqv.update_by_lots(price, lots)
 					elif lots < 0:
 						if high_price > price:
 							self.order_holder.exec_pending_order(_idx)
+							self.result_eqv_val = self.result_eqv.update_by_lots(price, lots)
 				elif type == 'stop':
 					if lots < 0:
 						if low_price < price:
 							self.order_holder.exec_pending_order(_idx)
+							self.result_eqv_val = self.result_eqv.update_by_lots(price, lots)
 					elif lots > 0:
 						if high_price > price:
 							self.order_holder.exec_pending_order(_idx)
-		
+							self.result_eqv_val = self.result_eqv.update_by_lots(price, lots)
 		
 	def calc_equty(self):
 		self.result_eqv.calc_by_lots(self.market_price, 0)
