@@ -8,26 +8,15 @@ class OrdersHolder:
 		self.log = []
 		self.open_orders = {}
 		self.open_orders_log = {}
-		self.pending_orders_log = {}
+		self.pending_orders = {}
 		
 		self.open_lots_balance = 0
-		self.prev_lots_balance = 0
 		
-		# self.pending_orders = {}
-		# self.open_orders = {}
+		self.buy_stop_lots_balance = 0
+		self.sell_stop_lots_balance = 0
 		
-		# self.open_lots_balance = 0
-		# self.last_open_price = 0
-		
-		# self.buy_stop_order_cnt = 0
-		# self.sell_stop_order_cnt = 0
-		# self.last_buy_stop_price = 0
-		# self.last_sell_stop_price = 0
-		
-		# self.buy_limit_order_cnt = 0
-		# self.sell_limit_order_cnt = 0
-		# self.last_buy_limit_price = 0
-		# self.last_sell_limit_price = 0
+		self.buy_limit_lots_balance = 0
+		self.sell_limit_lots_balance = 0
 
 		
 	def add_open_order(self, price, lots):
@@ -106,27 +95,24 @@ class OrdersHolder:
 		self.prev_lots_balance = self.open_lots_balance
 		self.open_lots_balance += lots
 	
-	# def add_pending_order(self, price, lots, type):
-		# self.pending_orders[len(self.pending_orders)] = {
+	def add_pending_order(self, price, lots, type):
+		self.pending_orders[len(self.pending_orders)] = {
 			# 'date': None,
 			# 'time': None,
-			# 'price': price,
-			# 'lots': lots,
-			# 'status': 'act',
-			# 'type': type
-		# }
-		# if type == 'stop':
-			# if lots > 0:
-				# self.buy_stop_order_cnt += 1
-			# elif lots < 0:
-				# self.sell_stop_order_cnt += 1
-			# self.stop_order_cnt += 1
-		# elif type == 'limit':
-			# if lots > 0:
-				# self.buy_limit_order_cnt += 1
-			# elif lots < 0:
-				# self.sell_limit_order_cnt += 1
-			# self.limit_order_cnt += 1
+			'price': price,
+			'lots': lots,
+			'type': type
+		}
+		if type == 'stop':
+			if lots > 0:
+				self.buy_stop_lots_balance += lots
+			elif lots < 0:
+				self.sell_stop_lots_balance += lots
+		elif type == 'limit':
+			if lots > 0:
+				self.buy_limit_lots_balance += lots
+			elif lots < 0:
+				self.sell_limit_lots_balance += lots
 		
 	# def exec_pending_order(self, _idx):
 		# price = self.pending_orders[_idx]['price']

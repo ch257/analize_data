@@ -24,6 +24,7 @@ class OrdersExec:
 		self.high_price = high_price
 		self.low_price = low_price
 		# print(self.order_holder.open_orders)
+		print('P:', self.order_holder.pending_orders)
 		# print(self.non_loss_price())
 		# for _idx in self.order_holder.pending_orders:
 			# status = self.order_holder.pending_orders[_idx]['status']
@@ -79,13 +80,13 @@ class OrdersExec:
 		self.log = [self.h_eqv_val, self.l_eqv_val, self.result_eqv_val]
 		# print('Sell:', self.market_price)
 
-	# def BuyLimit(self, lots, price):
-		# if price < self.market_price:
-			# self.order_holder.add_pending_order(price, lots, 'limit')
+	def BuyLimit(self, lots, price):
+		if price < self.market_price:
+			self.order_holder.add_pending_order(price, lots, 'limit')
 
-	# def SellLimit(self, lots, price):
-		# if price > self.market_price:
-			# self.order_holder.add_pending_order(price, -lots, 'limit')
+	def SellLimit(self, lots, price):
+		if price > self.market_price:
+			self.order_holder.add_pending_order(price, -lots, 'limit')
 
 	# def BuyStop(self, lots, price):
 		# if price > self.market_price:
