@@ -42,36 +42,44 @@ class OrdersHolder:
 		if self.open_lots_balance > 0:
 			if order['lots'] < 0:
 				remain_lots = order['lots']
+				
 				_idx = 0
 				while _idx < len(self.open_orders) and remain_lots <= 0:
 					open_order = self.open_orders[_idx]
 					remain_lots += open_order['lots']
 					_idx += 1
+				found_idx = _idx - 1
+				
 				if remain_lots > 0:
-					self.open_orders[_idx - 1]['lots'] = remain_lots
-					for _i in range(len(self.open_orders)):
-						if _idx - 1 < len(self.open_orders):
-							self.open_orders[_i] = self.open_orders[_idx - 1]
+					self.open_orders[found_idx]['lots'] = remain_lots
+					for _idx in range(len(self.open_orders)):
+						if found_idx < len(self.open_orders):
+							self.open_orders[_idx] = self.open_orders[found_idx]
 						else:	
-							self.open_orders.pop(_i)
-						_idx += 1
+							self.open_orders.pop(_idx)
+						found_idx += 1
+				
 				elif remain_lots < 0:
 					order['lots'] = remain_lots
 					self.open_orders = {}
 					self.open_orders[0] = order
+				
 				else:
 					self.open_orders = {}
+			
 			elif order['lots'] > 0:
 				self.open_orders[len(self.open_orders)] = order
 		
 		elif self.open_lots_balance < 0:
 			if order['lots'] > 0:
 				remain_lots = order['lots']
+				
 				_idx = 0
 				while _idx < len(self.open_orders) and remain_lots >= 0:
 					open_order = self.open_orders[_idx]
 					remain_lots += open_order['lots']
 					_idx += 1
+				
 				if remain_lots < 0:
 					self.open_orders[_idx - 1]['lots'] = remain_lots
 					for _i in range(len(self.open_orders)):
@@ -80,17 +88,20 @@ class OrdersHolder:
 						else:	
 							self.open_orders.pop(_i)
 						_idx += 1
+				
 				elif remain_lots > 0:
 					order['lots'] = remain_lots
 					self.open_orders = {}
 					self.open_orders[0] = order
+				
 				else:
 					self.open_orders = {}
+			
 			elif order['lots'] < 0:
 				self.open_orders[len(self.open_orders)] = order
 				
 		else:
-			self.open_orders[len(self.open_orders)] = order
+			self.open_orders[0] = order
 				
 		self.prev_lots_balance = self.open_lots_balance
 		self.open_lots_balance += lots
