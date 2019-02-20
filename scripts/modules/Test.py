@@ -87,7 +87,7 @@ class Test:
 			order_exec.calc_equty()
 			
 			open_long, open_short, close_long, close_short = arb_sig.calc(Si_C, Eu_C, ED_C)
-			arb_trd.trade(open_long, open_short, close_long, close_short, Eu_C)
+			# arb_trd.trade(open_long, open_short, close_long, close_short, Eu_C)
 			
 			adv_columns_vals = []
 			adv_columns_vals.extend(arb_sig.log)
