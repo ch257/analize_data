@@ -13,11 +13,13 @@ class EquityA:
 		self.lots_balance += lots
 		if self.buffer.is_ready:
 			self.eqv += (new_item - self.buffer.buff[0]) * self.lots_balance
+		else:
+			self.eqv = 0
 		
 		self.buffer.slide(new_item)
 		return self.eqv
 		
-	def update_by_lots(self, new_item, lots=0):
+	'''def update_by_lots(self, new_item, lots=0):
 		self.lots_balance += lots
 		if self.buffer.is_ready:
 			self.eqv += (new_item - self.buffer.buff[0]) * self.lots_balance
@@ -31,6 +33,6 @@ class EquityA:
 			self.eqv += (new_item - self.buffer.buff[0]) * self.lots_balance
 		
 		self.buffer.slide(new_item)
-		return self.eqv
+		return self.eqv'''
 
 
