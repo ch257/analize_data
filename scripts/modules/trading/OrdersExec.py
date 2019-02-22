@@ -3,6 +3,7 @@
 from modules.indicators.Buffer import *
 from modules.indicators.EquityA import *
 from modules.trading.OrdersHolder import *
+from modules.trading.ResEquity import *
 
 class OrdersExec:
 	
@@ -12,9 +13,11 @@ class OrdersExec:
 		self.market_price = 0
 		self.high_price = 0 
 		self.low_price = 0
-		self.h_eqv = EquityA()
-		self.l_eqv = EquityA()
-		self.result_eqv = EquityA()
+		# self.h_eqv = EquityA()
+		# self.l_eqv = EquityA()
+		# self.result_eqv = EquityA()
+		
+		self.res_equity = ResEquity()
 		self.h_eqv_val = 0
 		self.l_eqv_val = 0
 		self.result_eqv_val = 0
@@ -59,9 +62,11 @@ class OrdersExec:
 		
 	def calc_equty(self):
 		# self.result_eqv.calc_by_lots(self.market_price, 0)
-		self.h_eqv_val = self.h_eqv.calc_by_lots_balance(self.high_price, self.order_holder.open_lots_balance)
-		self.l_eqv_val = self.l_eqv.calc_by_lots_balance(self.low_price, self.order_holder.open_lots_balance)
-		self.fill_log()
+		# self.h_eqv_val = self.h_eqv.calc_by_lots_balance(self.high_price, self.order_holder.open_lots_balance)
+		# self.l_eqv_val = self.l_eqv.calc_by_lots_balance(self.low_price, self.order_holder.open_lots_balance)
+		self.res_equity.calc(self.high_price, self.low_price, 0, 0, self.order_holder.open_lots_balance)
+		# self.fill_log()
+		
 		
 	def non_loss_price(self):
 		nlp = None
