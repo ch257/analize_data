@@ -27,7 +27,7 @@ class OrdersExec:
 		self.high_price = high_price
 		self.low_price = low_price
 		# print('P:', self.order_holder.pending_orders)
-		print('O:', self.order_holder.open_orders)
+		# print('O:', self.order_holder.open_orders)
 		# print(self.non_loss_price())
 		executed = False
 		for _idx in self.order_holder.pending_orders:
@@ -40,26 +40,22 @@ class OrdersExec:
 					if lots > 0:
 						if low_price < price:
 							self.order_holder.exec_pending_order(_idx)
-							self.result_eqv_val = self.result_eqv.calc_by_lots(price, lots)
 							executed = True
 					elif lots < 0:
 						if high_price > price:
 							self.order_holder.exec_pending_order(_idx)
-							self.result_eqv_val = self.result_eqv.calc_by_lots(price, lots)
 							executed = True
 				elif type == 'stop':
 					if lots < 0:
 						if low_price < price:
 							self.order_holder.exec_pending_order(_idx)
-							self.result_eqv_val = self.result_eqv.calc_by_lots(price, lots)
 							executed = True
 					elif lots > 0:
 						if high_price > price:
 							self.order_holder.exec_pending_order(_idx)
-							self.result_eqv_val = self.result_eqv.calc_by_lots(price, lots)
 							executed = True
-		if not executed:
-			self.result_eqv.calc_by_lots(self.market_price, 0)
+		# if not executed:
+			# self.result_eqv.calc_by_lots(self.market_price, 0)
 		
 	def calc_equty(self):
 		# self.result_eqv.calc_by_lots(self.market_price, 0)
@@ -82,13 +78,13 @@ class OrdersExec:
 		
 	def BuyMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, lots)
-		self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, lots)
+		# self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, lots)
 		self.fill_log()
 		# print('Buy:', self.market_price)
 
 	def SellMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, -lots)
-		self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, -lots)
+		# self.result_eqv_val = self.result_eqv.calc_by_lots(self.market_price, -lots)
 		self.fill_log()
 		# print('Sell:', self.market_price)
 
