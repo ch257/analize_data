@@ -22,6 +22,7 @@ class EquityA:
 				self.eqv = self.dyn_eqv
 			
 		else:
+			# self.stat_eqv += price * lots
 			self.eqv = 0
 		
 		self.buffer.slide(price)

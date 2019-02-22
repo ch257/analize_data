@@ -25,13 +25,13 @@ class ArbitrageTrading:
 		
 		if self.cnt == 40:
 			self.order_exec.BuyMarket(1)
-		if self.cnt == 50:
-			self.order_exec.SellMarket(1)
+		# if self.cnt == 50:
+			# self.order_exec.SellMarket(1)
 			
-		if self.cnt == 60:
-			self.order_exec.SellMarket(1)
-		if self.cnt == 70:
-			self.order_exec.BuyMarket(1)
+		# if self.cnt == 60:
+			# self.order_exec.SellMarket(1)
+		# if self.cnt == 70:
+			# self.order_exec.BuyMarket(1)
 		
 		# if close_long:
 			# if self.order_holder.open_lots_balance > 0:
