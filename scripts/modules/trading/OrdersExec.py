@@ -61,7 +61,7 @@ class OrdersExec:
 			# self.result_eqv.calc_by_lots(self.market_price, 0)
 		
 	def calc_equty(self):
-		self.h_eqv_val, self.l_eqv_val, self.result_eqv_val = self.res_equity.calc(self.high_price, self.low_price, 0, 0, self.order_holder.open_lots_balance)
+		self.h_eqv_val, self.l_eqv_val = self.res_equity.calc(self.high_price, self.low_price, self.order_holder.open_lots_balance)
 		self.fill_log()
 		# print(self.order_holder.open_lots_balance)
 		
@@ -80,13 +80,13 @@ class OrdersExec:
 		
 	def BuyMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, lots)
-		self.h_eqv_val, self.l_eqv_val, self.result_eqv_val = self.res_equity.calc(self.high_price, self.low_price, self.market_price, -lots, self.order_holder.open_lots_balance)
+		self.result_eqv_val = self.res_equity.calc_res(self.market_price, lots)
 		self.fill_log()
 		# print('Buy:', self.market_price)
 
 	def SellMarket(self, lots):
 		self.order_holder.add_open_order(self.market_price, -lots)
-		self.h_eqv_val, self.l_eqv_val, self.result_eqv_val = self.res_equity.calc(self.high_price, self.low_price, self.market_price, lots, self.order_holder.open_lots_balance)
+		self.result_eqv_val = self.res_equity.calc_res(self.market_price, -lots)
 		self.fill_log()
 		# print('Sell:', self.market_price)
 
