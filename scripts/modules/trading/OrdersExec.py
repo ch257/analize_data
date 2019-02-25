@@ -32,7 +32,6 @@ class OrdersExec:
 		# print('P:', self.order_holder.pending_orders)
 		# print('O:', self.order_holder.open_orders)
 		# print(self.non_loss_price())
-		executed = False
 		for _idx in self.order_holder.pending_orders:
 			status = self.order_holder.pending_orders[_idx]['status']
 			type = self.order_holder.pending_orders[_idx]['type']
@@ -43,22 +42,24 @@ class OrdersExec:
 					if lots > 0:
 						if low_price < price:
 							self.order_holder.exec_pending_order(_idx)
-							executed = True
+							self.result_eqv_val = self.res_equity.calc_res(price, lots)
+							self.fill_log()
 					elif lots < 0:
 						if high_price > price:
 							self.order_holder.exec_pending_order(_idx)
-							executed = True
+							self.result_eqv_val = self.res_equity.calc_res(price, lots)
+							self.fill_log()
 				elif type == 'stop':
 					if lots < 0:
 						if low_price < price:
 							self.order_holder.exec_pending_order(_idx)
-							executed = True
+							self.result_eqv_val = self.res_equity.calc_res(price, lots)
+							self.fill_log()
 					elif lots > 0:
 						if high_price > price:
 							self.order_holder.exec_pending_order(_idx)
-							executed = True
-		# if not executed:
-			# self.result_eqv.calc_by_lots(self.market_price, 0)
+							self.result_eqv_val = self.res_equity.calc_res(price, lots)
+							self.fill_log()
 		
 	def calc_equty(self):
 		self.h_eqv_val, self.l_eqv_val = self.res_equity.calc(self.high_price, self.low_price, self.order_holder.open_lots_balance)
