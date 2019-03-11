@@ -124,14 +124,14 @@ class Tools:
 		else:
 			return value_format.format(value)
 	
-	def shape_column_types(self, columns, file_column_types):
+	def shape_column_types(self, columns, column_types):
 		if self._errors.error_occured:
 			return None
 			
 		column_types = {}
 		for col in columns:
-			if file_column_types.get(col) != None:
-				column_types[col] = file_column_types[col]
+			if column_types.get(col) != None:
+				column_types[col] = column_types[col]
 			else:
 				# self._errors.raise_error('Unknown column ' + col + ' for type detecting')
 				# break

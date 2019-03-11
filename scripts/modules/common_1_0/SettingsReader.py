@@ -9,7 +9,7 @@ class SettingsReader:
 		self._default_settings_file_path = 'settings/default.ini'
 		self._settings = {}
 		
-	def read_settings(self, args):
+	def read(self, args):
 		if self._errors.error_occured:
 			return None
 		
@@ -39,36 +39,29 @@ class SettingsReader:
 			user_settings = default_ini_parser.read_ini(self._default_settings_file_path, self._ini_encoding)
 			
 		self._settings['input_file'] = {}
-		self._settings['output_file'] = {}
-		
 		self._settings['input_file']['path'] = user_ini_parser.get_param('input_file', 'path')
 		input_file_format_section = user_ini_parser.get_param('input_file', 'format')
+		input_file_column_types_section = user_ini_parser.get_param(input_file_format_section, 'column_types')
+		input_file_column_formats_section = user_ini_parser.get_param(input_file_format_section, 'column_formats')
 		self._settings['input_file']['format'] = {
-			'list_separator': user_ini_parser.get_param(input_file_format_section, 'list_separator', 'escape')
+			'list_separator': user_ini_parser.get_param(input_file_format_section, 'list_separator', 'escape'),
+			'decimal_symbol': user_ini_parser.get_param(input_file_format_section, 'decimal_symbol', 'escape'),
+			'encoding': user_ini_parser.get_param(input_file_format_section, 'encoding'),
+			'column_types': user_ini_parser.get_param(input_file_column_types_section),
+			'column_formats': user_ini_parser.get_param(input_file_column_formats_section)
 		}
 		
-		# input_file_path = self.ini_parser.get_param('input', 'file_path')
-		# input_file_format = {}
-		# input_file_format_section = self.ini_parser.get_param('input', 'file_format')
-		# input_file_format['list_separator'] = self.ini_parser.get_param(input_file_format_section, 'list_separator', 'escape')
-		# input_file_format['decimal_symbol'] = self.ini_parser.get_param(input_file_format_section, 'decimal_symbol', 'escape')
-		# input_file_format['encoding'] = self.ini_parser.get_param(input_file_format_section, 'encoding')
-		
-		# input_file_column_types_section = self.ini_parser.get_param(input_file_format_section, 'file_column_types')
-		# input_file_column_formats_section = self.ini_parser.get_param(input_file_format_section, 'file_column_formats')
-		# input_file_format['file_column_types'] = self.ini_parser.get_param(input_file_column_types_section)
-		# input_file_format['file_column_formats'] = self.ini_parser.get_param(input_file_column_formats_section)
-		
-		# output_file_path = self.ini_parser.get_param('output', 'file_path')
-		# output_file_format = {}
-		# output_file_format_section = self.ini_parser.get_param('output', 'file_format')
-		# output_file_format['list_separator'] = self.ini_parser.get_param(output_file_format_section, 'list_separator', 'escape')
-		# output_file_format['decimal_symbol'] = self.ini_parser.get_param(output_file_format_section, 'decimal_symbol', 'escape')
-		# output_file_format['encoding'] = self.ini_parser.get_param(output_file_format_section, 'encoding')
-		
-		# output_file_column_types_section = self.ini_parser.get_param(output_file_format_section, 'file_column_types')
-		# output_file_column_formats_section = self.ini_parser.get_param(output_file_format_section, 'file_column_formats')
-		# output_file_format['file_column_types'] = self.ini_parser.get_param(output_file_column_types_section)
-		# output_file_format['file_column_formats'] = self.ini_parser.get_param(output_file_column_formats_section)
+		self._settings['output_file'] = {}
+		self._settings['output_file']['path'] = user_ini_parser.get_param('output_file', 'path')
+		output_file_format_section = user_ini_parser.get_param('output_file', 'format')
+		output_file_column_types_section = user_ini_parser.get_param(output_file_format_section, 'column_types')
+		output_file_column_formats_section = user_ini_parser.get_param(output_file_format_section, 'column_formats')
+		self._settings['output_file']['format'] = {
+			'list_separator': user_ini_parser.get_param(output_file_format_section, 'list_separator', 'escape'),
+			'decimal_symbol': user_ini_parser.get_param(output_file_format_section, 'decimal_symbol', 'escape'),
+			'encoding': user_ini_parser.get_param(output_file_format_section, 'encoding'),
+			'column_types': user_ini_parser.get_param(output_file_column_types_section),
+			'column_formats': user_ini_parser.get_param(output_file_column_formats_section)
+		}
 		
 		return self._settings
