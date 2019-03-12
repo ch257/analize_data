@@ -21,12 +21,12 @@ class Levels:
 		input_file_format = settings['input_file']['format']
 		table, columns = csv_parser.csv2table(input_file_path, input_file_format)
 		
+		print(table)
 		
 		output_file_path = settings['output_file']['path']
 		output_file_format = settings['output_file']['format']
 		csv_parser.table2csv(table, columns, output_file_path, output_file_format)
 		
-		print(table)
 		
 		if self._errors.error_occured:
 			self._errors.print_errors()
