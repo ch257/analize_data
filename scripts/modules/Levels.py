@@ -21,11 +21,15 @@ class Levels:
 		input_file_path = settings['input_file']['path']
 		input_file_format = settings['input_file']['format']
 		table, columns = csv_parser.csv2table(input_file_path, input_file_format)
-		table_i = TableIterator(self._errors, table, columns)
-		while not table_i.EOD:
-			rec, rec_cnt = table_i.next_rec()
-			print(rec)
 		
+		# table_i = TableIterator(self._errors, table, columns)
+		# while not table_i.EOD:
+			# rec, rec_cnt = table_i.next_rec()
+			# print(rec)
+		
+		fig_name = '0000'
+		plotter = Plotter(self._errors)
+		plotter.plot_series(table, settings, fig_name)
 		
 		output_file_path = settings['output_file']['path']
 		output_file_format = settings['output_file']['format']
