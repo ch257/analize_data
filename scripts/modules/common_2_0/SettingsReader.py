@@ -72,7 +72,7 @@ class SettingsReader:
 		curve_width_section = user_ini_parser.get_param('plotter', 'curve_width')
 		curve_color_section = user_ini_parser.get_param('plotter', 'curve_color')
 		curve_alpha_section = user_ini_parser.get_param('plotter', 'curve_alpha')
-		self._settings['plotter']= {
+		self._settings['plotter'] = {
 			'output': user_ini_parser.get_param(output_section),
 			'subplot_height': user_ini_parser.get_param(subplot_height_section),
 			'curve_subplot': user_ini_parser.get_param(curve_subplot_section),

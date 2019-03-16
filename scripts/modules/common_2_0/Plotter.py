@@ -14,5 +14,23 @@ class Plotter:
 		if self.errors.error_occured:
 			return None
 			
-		print(settings)
+		for section in settings:
+			print(section)
+			
+		curve_subplot = settings['curve_subplot']
+		output = settings['output']
+		subplot_height = settings['subplot_height']
+		curve_subplot = settings['curve_subplot']
+		curve_type = settings['curve_type']
+		curve_width = settings['curve_width']
+		curve_color = settings['curve_color']
+		curve_alpha = settings['curve_alpha']
 		
+		subplot_index = []
+		for col in columns:
+			if curve_subplot.get(col) != None:
+				if not curve_subplot[col] in subplot_index:
+					subplot_index.append(curve_subplot[col])
+				
+		subplot_index.sort()
+		print(subplot_index)
