@@ -64,4 +64,22 @@ class SettingsReader:
 			'column_formats': user_ini_parser.get_param(output_file_column_formats_section)
 		}
 		
+		self._settings['plotter'] = {}
+		output_section = user_ini_parser.get_param('plotter', 'output')
+		subplot_height_section = user_ini_parser.get_param('plotter', 'subplot_height')
+		curve_subplot_section = user_ini_parser.get_param('plotter', 'curve_subplot')
+		curve_type_section = user_ini_parser.get_param('plotter', 'curve_type')
+		curve_width_section = user_ini_parser.get_param('plotter', 'curve_width')
+		curve_color_section = user_ini_parser.get_param('plotter', 'curve_color')
+		curve_alpha_section = user_ini_parser.get_param('plotter', 'curve_alpha')
+		self._settings['plotter']= {
+			'output': user_ini_parser.get_param(output_section),
+			'subplot_height': user_ini_parser.get_param(subplot_height_section),
+			'curve_subplot': user_ini_parser.get_param(curve_subplot_section),
+			'curve_type': user_ini_parser.get_param(curve_type_section),
+			'curve_width': user_ini_parser.get_param(curve_width_section),
+			'curve_color': user_ini_parser.get_param(curve_color_section),
+			'curve_alpha': user_ini_parser.get_param(curve_alpha_section)
+		}
+		
 		return self._settings

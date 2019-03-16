@@ -28,9 +28,9 @@ class Levels:
 			# rec, rec_cnt = table_i.next_rec()
 			# print(rec)
 		
-		# fig_name = '0000'
-		# plotter = Plotter(self._errors)
-		# plotter.plot_series(table, columns, settings['plotter'], fig_name)
+		fig_name = '0000'
+		plotter = Plotter(self._errors)
+		plotter.plot_series(table, columns, settings['plotter'], fig_name)
 		
 		output_file_path = settings['output_file']['path']
 		output_file_format = settings['output_file']['format']
