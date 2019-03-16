@@ -27,7 +27,6 @@ class SettingsReader:
 			user_settings = user_ini_parser.read_ini(user_ini_file_path, encoding)
 			default_ini_parser = IniParser(self._errors)
 			default_settings = default_ini_parser.read_ini(self._default_settings_file_path, self._ini_encoding)
-			print(default_ini_parser.settings)
 		
 			for section in default_settings:
 				if not user_settings.get(section):	
@@ -83,5 +82,5 @@ class SettingsReader:
 			# 'curve_color': user_ini_parser.get_param(curve_color_section)
 			# 'curve_alpha': user_ini_parser.get_param(curve_alpha_section)
 		# ]
-		
+		print('!!!!!!!!!!!!!!!!!!!!!!')
 		return self._settings
