@@ -27,6 +27,8 @@ class SettingsReader:
 			user_settings = user_ini_parser.read_ini(user_ini_file_path, encoding)
 			default_ini_parser = IniParser(self._errors)
 			default_settings = default_ini_parser.read_ini(self._default_settings_file_path, self._ini_encoding)
+			print(default_ini_parser.settings)
+		
 			for section in default_settings:
 				if not user_settings.get(section):	
 					user_settings[section] = {}
@@ -63,5 +65,23 @@ class SettingsReader:
 			'column_types': user_ini_parser.get_param(output_file_column_types_section),
 			'column_formats': user_ini_parser.get_param(output_file_column_formats_section)
 		}
+		
+		# self._settings['plotter'] = {}
+		# output_section = user_ini_parser.get_param('plotter', 'output')
+		# subplot_height_section = user_ini_parser.get_param('plotter', 'subplot_height')
+		# curve_subplot_section = user_ini_parser.get_param('plotter', 'curve_subplot')
+		# curve_type_section = user_ini_parser.get_param('plotter', 'curve_type')
+		# curve_width_section = user_ini_parser.get_param('plotter', 'curve_width')
+		# curve_color_section = user_ini_parser.get_param('plotter', 'curve_color')
+		# curve_alpha_section = user_ini_parser.get_param('plotter', 'curve_alpha')
+		# self._settings['plotter'][
+			# 'output': user_ini_parser.get_param(output_section)
+			# 'subplot_height': user_ini_parser.get_param(subplot_height_section)
+			# 'curve_subplot': user_ini_parser.get_param(curve_subplot_section)
+			# 'curve_type': user_ini_parser.get_param(curve_type_section)
+			# 'curve_width': user_ini_parser.get_param(curve_width_section)
+			# 'curve_color': user_ini_parser.get_param(curve_color_section)
+			# 'curve_alpha': user_ini_parser.get_param(curve_alpha_section)
+		# ]
 		
 		return self._settings

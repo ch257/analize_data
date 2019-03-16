@@ -10,4 +10,9 @@ class Plotter:
 		self.ax = []
 		self.subplot_offset = 0
 		
+	def plot_series(self, table, columns, settings, fig_name):
+		if self.errors.error_occured:
+			return None
+			
+		print(settings)
 		
