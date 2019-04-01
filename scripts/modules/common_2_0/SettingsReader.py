@@ -50,7 +50,9 @@ class SettingsReader:
 			'column_types': user_ini_parser.get_param(input_file_column_types_section),
 			'column_formats': user_ini_parser.get_param(input_file_column_formats_section)
 		}
-		
+		self._settings['input_folder'] = {}
+		self._settings['input_folder']['path'] = user_ini_parser.get_param('input_folder', 'path')
+
 		self._settings['output_file'] = {}
 		self._settings['output_file']['path'] = user_ini_parser.get_param('output_file', 'path')
 		output_file_format_section = user_ini_parser.get_param('output_file', 'format')
@@ -63,6 +65,8 @@ class SettingsReader:
 			'column_types': user_ini_parser.get_param(output_file_column_types_section),
 			'column_formats': user_ini_parser.get_param(output_file_column_formats_section)
 		}
+		self._settings['output_folder'] = {}
+		self._settings['output_folder']['path'] = user_ini_parser.get_param('output_folder', 'path')
 		
 		self._settings['plotter'] = {}
 		output_section = user_ini_parser.get_param('plotter', 'output')
