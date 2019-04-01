@@ -35,16 +35,26 @@ class Join:
 			
 			date1 = rec1['<DATE>']
 			time1 = rec1['<TIME>']
+			v1 = rec1['<VOL>']
 			while not ti2.EOD:
 				rec2, rec_cnt2 = ti2.next_rec()
 				date2 = rec2['<DATE>']
 				time2 = rec2['<TIME>']
-				if date1 <= date2:
+				v2 = rec2['<VOL>']
+				if date1 == date2:
+					# print(date1.date(), '=', date2.date(), ' ', time1.time(), '=', time2.time(), ' ', v1, '=', v2)
+					if time1 == time2:
+						print(date1.date(), '=', date2.date(), ' ', time1.time(), '=', time2.time(), ' ', v1, '=', v2)
+						break
+					elif time1 < time2:
+						print(date1.date(), '=', date2.date(), ' ', time1.time(), '=', 'null', ' ', 'null')
+						ti2.rec_cnt -= 1
+						break
+				elif date1 < date2:
+					print(date1.date(), '=', 'null', ' ', time1.time(), '=', 'null', ' ', 'null')
+					ti2.rec_cnt -= 1
 					break
 				
-			if date1 == date2:
-				print(date1.date(), '=', date2.date(), time1.time(), time2.time())
-			
 		
 		
 		# output_file_path = settings['output_file']['path']
