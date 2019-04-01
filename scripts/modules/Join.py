@@ -17,23 +17,34 @@ class Join:
 		settings = settings_reader.read(args)
 		# print(settings)
 		
-		csv_parser = CSVParser(self._errors)
+		csv_parser1 = CSVParser(self._errors)
+		csv_parser2 = CSVParser(self._errors)
 		input_folder_path = settings['input_folder']['path']
 		input_file_format = settings['input_file']['format']
 		
 		input_file_path1 = input_folder_path + 'join_test1.txt'
 		input_file_path2 = input_folder_path + 'join_test2.txt'
 		
-		table1, columns1 = csv_parser.csv2table(input_file_path1, input_file_format)
-		table2, columns2 = csv_parser.csv2table(input_file_path2, input_file_format)
+		table1, columns1 = csv_parser1.csv2table(input_file_path1, input_file_format)
+		table2, columns2 = csv_parser2.csv2table(input_file_path2, input_file_format)
 		
-		print(table1)
-		print(table2)
-		
-		# table_i = TableIterator(self._errors, table, columns)
-		# while not table_i.EOD:
-			# rec, rec_cnt = table_i.next_rec()
-			# print(rec)
+		ti1 = TableIterator(self._errors, table1, columns1)
+		ti2 = TableIterator(self._errors, table2, columns2)
+		while not ti1.EOD:
+			rec1, rec_cnt1 = ti1.next_rec()
+			
+			date1 = rec1['<DATE>']
+			time1 = rec1['<TIME>']
+			while not ti2.EOD:
+				rec2, rec_cnt2 = ti2.next_rec()
+				date2 = rec2['<DATE>']
+				time2 = rec2['<TIME>']
+				if date1 <= date2:
+					break
+				
+			if date1 == date2:
+				print(date1.date(), '=', date2.date(), time1.time(), time2.time())
+			
 		
 		
 		# output_file_path = settings['output_file']['path']
