@@ -86,4 +86,10 @@ class SettingsReader:
 			'curve_alpha': user_ini_parser.get_param(curve_alpha_section)
 		}
 		
+		self._settings['usd_rate'] = {}
+		self._settings['usd_rate'] = user_ini_parser.get_param('usd_rate')
+		
+		self._settings['contracts'] = {}
+		self._settings['contracts']['tickers'] = user_ini_parser.get_param('contracts', 'tickers', 'str_array')
+		
 		return self._settings
