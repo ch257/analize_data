@@ -23,7 +23,9 @@ class UsdRate:
 		
 		input_file_format = settings['input_file']['format']
 		
-		ur_table, ur_columns = csv_parser.csv2table(ur_file_path, ur_file_format)
+		ur_csv_parser = CSVParser(self._errors)
+		ur_file_path = settings['rate_file']['usd_rate_file_path']
+		ur_table, ur_columns = ur_csv_parser.csv2table(ur_file_path, input_file_format)
 		
 		fs = FileSystem(self._errors)
 		csv_parser = CSVParser(self._errors)

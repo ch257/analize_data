@@ -89,6 +89,9 @@ class SettingsReader:
 		self._settings['usd_rate'] = {}
 		self._settings['usd_rate'] = user_ini_parser.get_param('usd_rate')
 		
+		self._settings['rate_file'] = {}
+		self._settings['rate_file']['usd_rate_file_path'] = user_ini_parser.get_param('rate_file', 'usd_rate_file_path')
+		
 		self._settings['contracts'] = {}
 		self._settings['contracts']['tickers'] = user_ini_parser.get_param('contracts', 'tickers', 'str_array')
 		self._settings['contracts']['header'] = user_ini_parser.get_param('contracts', 'header')
