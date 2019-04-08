@@ -91,5 +91,6 @@ class SettingsReader:
 		
 		self._settings['contracts'] = {}
 		self._settings['contracts']['tickers'] = user_ini_parser.get_param('contracts', 'tickers', 'str_array')
+		self._settings['contracts']['header'] = user_ini_parser.get_param('contracts', 'header')
 		
 		return self._settings

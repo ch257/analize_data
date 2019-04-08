@@ -21,11 +21,13 @@ class Concatinate:
 		input_folder_path = settings['input_folder']['path']
 		output_folder_path = settings['output_folder']['path']
 		tickers = settings['contracts']['tickers']
+		header = settings['contracts']['header']
 		
 		fs = FileSystem(self._errors)
 		fs.create_folder_branch(output_folder_path)
 		concatinated_f = Files(self._errors)
 		curr_f = Files(self._errors)
+		concatinated_f_names = []
 		for ticker in tickers:
 			folder_list = fs.get_folder_list(input_folder_path + ticker)
 			for folder in folder_list:
@@ -33,9 +35,14 @@ class Concatinate:
 				for timeframe in timeframe_list:
 					concatinated_f_name = ticker + '_' + timeframe + '.txt'
 					concatinated_f_path = output_folder_path + concatinated_f_name
-					concatinated_f.open_file(concatinated_f_path, 'a')
+					if concatinated_f_name in concatinated_f_names:
+						concatinated_f.open_file(concatinated_f_path, 'a')
+					else:
+						concatinated_f.open_file(concatinated_f_path, 'w')
+						concatinated_f.write_line(header)
+						concatinated_f_names.append(concatinated_f_name)
+
 					print(concatinated_f_name)
-					
 					path = input_folder_path + ticker + '\\' + folder + '\\' + timeframe
 					file_list = fs.get_folder_list(path)
 					for f_name in file_list:
@@ -45,7 +52,7 @@ class Concatinate:
 							line = curr_f.read_line()
 							if line != '':
 								line = line.rstrip('\n')
-								if line != '':
+								if line != '' and line != header:
 									concatinated_f.write_line(line)
 							else:
 								break
