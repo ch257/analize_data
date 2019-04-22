@@ -140,7 +140,7 @@ class TableTools:
 						ti2.rec_cnt -= 1
 						break
 				elif date1 < date2:
-					self._fill_left(date2, time2, columns1, columns2, cross_columns, rec1, rec2, output_table)
+					self._fill_left(date2, time2, columns1, columns2, cross_columns, rec1, output_table)
 					ti2.rec_cnt -= 1
 					break
 		

@@ -26,6 +26,8 @@ class UsdRate:
 		ur_csv_parser = CSVParser(self._errors)
 		ur_file_path = settings['rate_file']['usd_rate_file_path']
 		ur_table, ur_columns = ur_csv_parser.csv2table(ur_file_path, input_file_format)
+		print(ur_columns)
+		t_tools = TableTools(self._errors)
 		
 		fs = FileSystem(self._errors)
 		csv_parser = CSVParser(self._errors)
@@ -36,6 +38,7 @@ class UsdRate:
 				if f_ticker == ticker:
 					input_file_path = input_folder_path + file_name
 					table, columns = csv_parser.csv2table(input_file_path, input_file_format)
+					joined_table, joined_columns = t_tools.left_join(table, columns, ur_table, ur_columns)
 					print(ticker)
 		
 		if self._errors.error_occured:
