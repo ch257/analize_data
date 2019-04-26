@@ -39,7 +39,11 @@ class UsdRate:
 					input_file_path = input_folder_path + file_name
 					table, columns = csv_parser.csv2table(input_file_path, input_file_format)
 					joined_table, joined_columns = t_tools.left_join(table, columns, ur_table, ur_columns)
-					print(ticker)
+					oi = TableIterator(self._errors, joined_table, joined_columns)
+					while not oi.EOD:
+						rec, rec_cnt = oi.next_rec()
+						print(rec['<DATE>'].date(), rec['<TIME>'].time(), rec['t2.<RATE>'])
+					print(joined_columns)
 		
 		if self._errors.error_occured:
 			self._errors.print_errors()

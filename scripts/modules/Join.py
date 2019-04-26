@@ -34,7 +34,8 @@ class Join:
 		oi = TableIterator(self._errors, joined_table, joined_columns)
 		while not oi.EOD:
 			rec, rec_cnt = oi.next_rec()
-			print(rec['<DATE>'].date(), rec['<TIME>'].time(), rec['t1.<VOL>'], rec['t2.<VOL>'])
+			# print(rec['<DATE>'].date(), rec['<TIME>'].time(), rec['t1.<VOL>'], rec['t2.<VOL>'])
+			print(rec['<DATE>'].date(), rec['<TIME>'].time(), rec['t2.<RATE>'])
 
 
 		
