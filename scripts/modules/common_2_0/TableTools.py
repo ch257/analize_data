@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*
 
-# import time
-# import datetime
-# from datetime import datetime as dt, date, time as tm
+import time
+import datetime
+from datetime import datetime as dt, date, time as tm
 
 from modules.common_2_0.TableIterator import *
 
@@ -248,3 +248,9 @@ class TableTools:
 		
 		return output_table, output_columns
 
+	def gen_datetime_table(self, date_range, time_range, exclude_date = [], exclude_time = []):
+		columns = ['<DATE>', '<TIME>']
+		table = {}
+		for  col in columns:
+			table[col] = []
+		pass

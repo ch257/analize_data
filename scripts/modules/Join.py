@@ -35,10 +35,15 @@ class Join:
 		while not oi.EOD:
 			rec, rec_cnt = oi.next_rec()
 			# print(rec['<DATE>'].date(), rec['<TIME>'].time(), rec['t1.<VOL>'], rec['t2.<VOL>'])
-			print(rec['<DATE>'].date(), rec['<TIME>'].time(), rec['t1.<CLOSE>'], rec['t2.<RATE>'])
+			# print(rec['<DATE>'].date(), rec['<TIME>'].time(), rec['t1.<CLOSE>'], rec['t2.<RATE>'])
 
 
+		min_date = min(table2['<DATE>'])
+		max_date = max(table2['<DATE>'])
 		
+		print(min_date, max_date)
+		
+		# t_tools.gen_datetime_table(self, date_range, time_range)
 		
 		# output_file_path = settings['output_file']['path']
 		# output_file_format = settings['output_file']['format']
