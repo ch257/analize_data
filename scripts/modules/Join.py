@@ -30,12 +30,12 @@ class Join:
 		
 		t_tools = TableTools(self._errors)
 		
-		joined_table, joined_columns = t_tools.left_join(table1, columns1, table2, columns2)
+		joined_table, joined_columns = t_tools.inner_join(table1, columns1, table2, columns2)
 		oi = TableIterator(self._errors, joined_table, joined_columns)
 		while not oi.EOD:
 			rec, rec_cnt = oi.next_rec()
 			# print(rec['<DATE>'].date(), rec['<TIME>'].time(), rec['t1.<VOL>'], rec['t2.<VOL>'])
-			print(rec['<DATE>'].date(), rec['<TIME>'].time(), rec['t2.<RATE>'])
+			print(rec['<DATE>'].date(), rec['<TIME>'].time(), rec['t1.<CLOSE>'], rec['t2.<RATE>'])
 
 
 		
