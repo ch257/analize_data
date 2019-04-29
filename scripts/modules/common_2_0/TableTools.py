@@ -248,9 +248,62 @@ class TableTools:
 		
 		return output_table, output_columns
 
-	def gen_datetime_table(self, date_range, time_range, exclude_date = [], exclude_time = []):
+	def gen_datetime_table(self, date_period, time_period, exclude_date_periods = [], exclude_time_periods = []):
 		columns = ['<DATE>', '<TIME>']
 		table = {}
 		for  col in columns:
 			table[col] = []
 		pass
+		
+	def time_range(self, start, stop, step):
+		rng = []
+		start_time = dt.strptime(start, '%H:%M:%S')
+		stop_time = dt.strptime(stop, '%H:%M:%S')
+		if stop_time == dt.strptime('00:00:00', '%H:%M:%S'): 
+			stop_time = dt.strptime(stop, '%H:%M:%S') + datetime.timedelta(days=1)
+		step_time = dt.strptime(step, '%H:%M:%S').time()
+		step_time = datetime.timedelta(hours=step_time.hour, minutes=step_time.minute, seconds=step_time.second)
+		
+		curr_time = start_time
+		while not self.errors.error_occured:
+			if curr_time >= stop_time:
+				break
+			else:
+				rng.append(curr_time.time())
+			curr_time += step_time
+		
+		return rng
+	
+	def generate_time_range(self, start, stop, step, exclude=[]):
+		rng = []
+		start_time = dt.strptime(start, '%H:%M:%S')
+		stop_time = dt.strptime(stop, '%H:%M:%S')
+		if stop_time == dt.strptime('00:00:00', '%H:%M:%S'): 
+			stop_time += datetime.timedelta(days=1)
+		step_time = dt.strptime(step, '%H:%M:%S').time()
+		step_time = datetime.timedelta(hours=step_time.hour, minutes=step_time.minute, seconds=step_time.second)
+		
+		for excl_cnt in range(len(exclude)):
+			excl = exclude[excl_cnt].split('-')
+			excl[0] = dt.strptime(excl[0], '%H:%M:%S')
+			excl[1] = dt.strptime(excl[1], '%H:%M:%S')
+			if excl[1] == dt.strptime('00:00:00', '%H:%M:%S'):
+				excl[1] += datetime.timedelta(days=1)
+			
+			exclude[excl_cnt] = [excl[0], excl[1]]
+
+		curr_time = start_time
+		while not self.errors.error_occured:
+			if curr_time >= stop_time:
+				break
+			else:
+				in_exclude = False
+				for excl in exclude: 
+					if excl[0] <= curr_time and excl[1] > curr_time:
+						in_exclude = True
+						break
+				if not in_exclude:
+					rng.append(tm.strftime(curr_time.time(), '%H%M%S'))
+			curr_time += step_time
+		
+		return rng

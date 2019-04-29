@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*
 
+import time
+import datetime
+from datetime import datetime as dt, date, time as tm
+
 from modules.common_2_0.Errors import *
 from modules.common_2_0.SettingsReader import *
 from modules.common_2_0.CSVParser import *
@@ -38,12 +42,8 @@ class Join:
 			# print(rec['<DATE>'].date(), rec['<TIME>'].time(), rec['t1.<CLOSE>'], rec['t2.<RATE>'])
 
 
-		min_date = min(table2['<DATE>'])
-		max_date = max(table2['<DATE>'])
 		
-		print(min_date, max_date)
-		
-		# t_tools.gen_datetime_table(self, date_range, time_range)
+		t_tools.gen_datetime_table(self, date_range, time_range)
 		
 		# output_file_path = settings['output_file']['path']
 		# output_file_format = settings['output_file']['format']
