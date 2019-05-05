@@ -248,32 +248,40 @@ class TableTools:
 		
 		return output_table, output_columns
 
-	def gen_datetime_table(self, date_period, time_period, exclude_date_periods = [], exclude_time_periods = []):
+	def gen_datetime_table(self, date_period, step_date, time_period, step_time, exclude_date_periods=[], exclude_time_periods=[]):
 		columns = ['<DATE>', '<TIME>']
 		table = {}
 		for  col in columns:
 			table[col] = []
-		pass
+			
+		start_date = date_period[0]
+		stop_date = date_period[1]
 		
-	def time_range(self, start, stop, step):
+		start_time = time_period[0]
+		stop_time = time_period[1]
+			
+		date_range = self.generate_date_range(start_date, stop_date, step_date)
+		time_range = self.generate_time_range(start_time, stop_time, step_time, exclude=exclude_time_periods)
+		
+		for d in date_range:
+			for t in time_range:
+				table['<DATE>'].append(d)
+				table['<TIME>'].append(t)
+		
+		return table, columns
+		
+	def generate_date_range(self, start, stop, step, exclude=[]):
 		rng = []
-		start_time = dt.strptime(start, '%H:%M:%S')
-		stop_time = dt.strptime(stop, '%H:%M:%S')
-		if stop_time == dt.strptime('00:00:00', '%H:%M:%S'): 
-			stop_time = dt.strptime(stop, '%H:%M:%S') + datetime.timedelta(days=1)
-		step_time = dt.strptime(step, '%H:%M:%S').time()
-		step_time = datetime.timedelta(hours=step_time.hour, minutes=step_time.minute, seconds=step_time.second)
+		start_date = dt.strptime(start, '%d.%m.%Y')
+		stop_date = dt.strptime(stop, '%d.%m.%Y')
+		step = datetime.timedelta(days=step)
 		
-		curr_time = start_time
-		while not self.errors.error_occured:
-			if curr_time >= stop_time:
-				break
-			else:
-				rng.append(curr_time.time())
-			curr_time += step_time
-		
+		while start_date < stop_date:
+			rng.append(start_date)
+			start_date += step
+
 		return rng
-	
+		
 	def generate_time_range(self, start, stop, step, exclude=[]):
 		rng = []
 		start_time = dt.strptime(start, '%H:%M:%S')
@@ -283,27 +291,23 @@ class TableTools:
 		step_time = dt.strptime(step, '%H:%M:%S').time()
 		step_time = datetime.timedelta(hours=step_time.hour, minutes=step_time.minute, seconds=step_time.second)
 		
-		for excl_cnt in range(len(exclude)):
-			excl = exclude[excl_cnt].split('-')
-			excl[0] = dt.strptime(excl[0], '%H:%M:%S')
-			excl[1] = dt.strptime(excl[1], '%H:%M:%S')
-			if excl[1] == dt.strptime('00:00:00', '%H:%M:%S'):
-				excl[1] += datetime.timedelta(days=1)
-			
-			exclude[excl_cnt] = [excl[0], excl[1]]
+		exclude_periods = []
+		for cnt in range(len(exclude)):
+			exclude_periods.append((dt.strptime(exclude[cnt][0], '%H:%M:%S'), dt.strptime(exclude[cnt][1], '%H:%M:%S')))
 
 		curr_time = start_time
-		while not self.errors.error_occured:
+		while not self._errors.error_occured:
 			if curr_time >= stop_time:
 				break
 			else:
 				in_exclude = False
-				for excl in exclude: 
+				for excl in exclude_periods: 
 					if excl[0] <= curr_time and excl[1] > curr_time:
 						in_exclude = True
 						break
 				if not in_exclude:
-					rng.append(tm.strftime(curr_time.time(), '%H%M%S'))
+					rng.append(curr_time)
+					# rng.append(tm.strftime(curr_time.time(), '%H%M%S'))
 			curr_time += step_time
 		
 		return rng

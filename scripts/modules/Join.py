@@ -41,9 +41,18 @@ class Join:
 			# print(rec['<DATE>'].date(), rec['<TIME>'].time(), rec['t1.<VOL>'], rec['t2.<VOL>'])
 			# print(rec['<DATE>'].date(), rec['<TIME>'].time(), rec['t1.<CLOSE>'], rec['t2.<RATE>'])
 
-
+		start_time = '12:00:00'
+		stop_time = '00:00:00'
+		step_time = '00:05:00'
+		exclude_time = ('18:50:00', '19:05:00')
+		start_date = '01.12.2018'
+		stop_date = dt.strftime((dt.today()), '%d.%m.%Y')
+		step_date = 1
 		
-		t_tools.gen_datetime_table(self, date_range, time_range)
+		date_period = (start_date, stop_date)
+		time_period = (start_time, stop_time)
+		exclude_time_periods = [exclude_time]
+		t_tools.gen_datetime_table(date_period, step_date, time_period, step_time, exclude_time_periods=exclude_time_periods)
 		
 		# output_file_path = settings['output_file']['path']
 		# output_file_format = settings['output_file']['format']
