@@ -80,22 +80,17 @@ class UsdRate:
 		input_file_format = settings['input_file']['format']
 		output_file_format = settings['output_file']['format']
 		
-		
 		ur_csv_parser = CSVParser(self._errors)
 		ur_file_path = settings['rate_file']['usd_rate_file_path']
 		ur_table, ur_columns = self.shape_moex_rate(ur_file_path, input_file_format)
-		# ur_table, ur_columns = ur_csv_parser.csv2table(ur_file_path, input_file_format)
 		
 		csv_parser = CSVParser(self._errors)
-		csv_parser.table2csv(ur_table, ur_columns, output_folder_path + '..\\moex_rates\\rates.txt', output_file_format)
-		
-		# if self._errors.error_occured:
-			# self._errors.print_errors()
-		
 		t_tools = TableTools(self._errors)
 		tools = Tools(self._errors)
-		
 		fs = FileSystem(self._errors)
+				
+		# csv_parser.table2csv(ur_table, ur_columns, output_folder_path + '..\\moex_rates\\rates.txt', output_file_format)
+		
 		file_list = fs.get_folder_list(input_folder_path)
 		for ticker in settings['usd_rate']:
 			usd_rate_mlt = float(settings['usd_rate'][ticker])
