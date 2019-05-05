@@ -186,8 +186,9 @@ class Tools:
 		
 		rec = {}
 		for col in table:
+			# print(col)
 			rec[col] = table[col][rec_cnt]
-		
+		# print()
 		return rec
 		
 	def add_columns(self, adv_columns, table, columns):
@@ -210,6 +211,13 @@ class Tools:
 			if table.get(cell_columns[cnt]) != None:
 				table[cell_columns[cnt]][rec_cnt] = cell_values[cnt]
 				
+	def create_table(self, cols):
+		table = {}
+		for col in cols:
+			table[col] = []
+			
+		return table
+		
 	def escape_sequence(self, seq):
 			
 		if seq == "'\\t'":
