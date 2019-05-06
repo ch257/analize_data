@@ -44,7 +44,7 @@ class Concatinate:
 
 					print(concatinated_f_name)
 					path = input_folder_path + ticker + '\\' + folder + '\\' + timeframe
-					file_list = fs.get_folder_list(path)
+					file_list = fs.get_folder_list(path)[0:-1]
 					for f_name in file_list:
 						curr_f_path = path + '\\' + f_name
 						curr_f.open_file(curr_f_path, 'r')

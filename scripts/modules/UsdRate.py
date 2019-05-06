@@ -112,17 +112,17 @@ class UsdRate:
 						tm_table['<DATE>'].append(rec['<DATE>'])
 						tm_table['<TIME>'].append(rec['<TIME>'])
 						tm_table['<VOL>'].append(rec['t1.<VOL>'])
-						# if rec['t2.<TOMORROW_RATE>']:
-						mlt = rec['t2.<TOMORROW_RATE>'] * usd_rate_mlt
-						tm_table['<OPEN>'].append(rec['t1.<OPEN>'] * mlt)
-						tm_table['<HIGH>'].append(rec['t1.<HIGH>'] * mlt)
-						tm_table['<LOW>'].append(rec['t1.<LOW>'] * mlt)
-						tm_table['<CLOSE>'].append(rec['t1.<CLOSE>'] * mlt)
-						# else:
-							# tm_table['<OPEN>'].append(None)
-							# tm_table['<HIGH>'].append(None)
-							# tm_table['<LOW>'].append(None)
-							# tm_table['<CLOSE>'].append(None)
+						if rec['t2.<TOMORROW_RATE>']:
+							mlt = rec['t2.<TOMORROW_RATE>'] * usd_rate_mlt
+							tm_table['<OPEN>'].append(rec['t1.<OPEN>'] * mlt)
+							tm_table['<HIGH>'].append(rec['t1.<HIGH>'] * mlt)
+							tm_table['<LOW>'].append(rec['t1.<LOW>'] * mlt)
+							tm_table['<CLOSE>'].append(rec['t1.<CLOSE>'] * mlt)
+						else:
+							tm_table['<OPEN>'].append(None)
+							tm_table['<HIGH>'].append(None)
+							tm_table['<LOW>'].append(None)
+							tm_table['<CLOSE>'].append(None)
 					
 					csv_parser.table2csv(tm_table, columns, output_folder_path + 'tm_' + file_name, output_file_format)
 					
